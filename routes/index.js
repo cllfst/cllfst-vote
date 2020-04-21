@@ -13,11 +13,12 @@ router.get('/', function(req, res, next) {
 
 function sendEmails() {
     var randomstring = require("randomstring");
-    var cllfstAddress = 'cllfst.vote@gmail.com'
+    var from = process.env.EMAIL
     var emails = ["a@b.com", "a@b.c"] // TODO: read email list here
     emails.forEach(email => {
         var randomAccessCode = randomstring.generate(64);
-        sendEmail(cllfstAddress, email, randomAccessCode)
+        // TODO: write code to db
+        sendEmail(from, email, randomAccessCode)
     });
 }
 
