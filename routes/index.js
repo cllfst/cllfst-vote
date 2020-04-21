@@ -15,7 +15,6 @@ function sendEmails() {
     var randomstring = require("randomstring");
     var cllfstAddress = 'cllfst.vote@gmail.com'
     var emails = ["a@b.com", "a@b.c"] // TODO: read email list here
-
     emails.forEach(email => {
         var randomAccessCode = randomstring.generate(64);
         sendEmail(cllfstAddress, email, randomAccessCode)
@@ -25,26 +24,26 @@ function sendEmails() {
 function sendEmail(from, to, accessCode) {
     var nodemailer = require('nodemailer');
     var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: from,
-        pass: process.env.PASSWORD
-    }
+        service: 'gmail',
+        auth: {
+            user: from,
+            pass: process.env.PASSWORD
+        }
     });
 
     var mailOptions = {
         from: from,
         to: to,
-        subject: 'Voting test',
+        subject: 'Voting second test',
         text: 'Your code is: ' + accessCode
     };
 
     transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-        console.log(error);
-    } else {
-        console.log('Email sent: ' + info.response);
-    }
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
     });
 }
 
