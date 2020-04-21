@@ -7,5 +7,5 @@ cd cllfst_vote
 
 npm install
 
-PASSWORD=<your password> npm start
+PASSWORD=<your password> EMAIL=<your email> npm start
 ```
