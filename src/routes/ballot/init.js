@@ -15,7 +15,6 @@ router.post('/', function(req, res, next) {
         sendEmail(senderAddress, senderPassword, email, votingLink)
     })
 
-    // sendEmails(senderAddress, senderPassword, emails)
     res.json({"result": "true"})
 })
 
@@ -39,7 +38,7 @@ function sendEmail(from, fromPassword, to, votingLink) {
         if (error) {
             console.log(error)
         } else {
-            console.log('Email sent: ' + info.response)
+            console.log('Email sent [to:' + to + 'response:' + info.response + ']')
         }
     })
 }
