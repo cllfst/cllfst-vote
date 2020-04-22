@@ -7,45 +7,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    sendEmails()
-    res.send("Please check you email inbox !")
+    res.send("Home page !")
 });
-
-function sendEmails() {
-    var randomstring = require("randomstring");
-    var from = process.env.EMAIL
-    var emails = ["a@b.com", "a@b.c"] // TODO: read email list here
-    emails.forEach(email => {
-        var randomAccessCode = randomstring.generate(64);
-        // TODO: write code to db
-        sendEmail(from, email, randomAccessCode)
-    });
-}
-
-function sendEmail(from, to, accessCode) {
-    var nodemailer = require('nodemailer');
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: from,
-            pass: process.env.PASSWORD
-        }
-    });
-
-    var mailOptions = {
-        from: from,
-        to: to,
-        subject: 'Voting second test',
-        text: 'Your code is: ' + accessCode
-    };
-
-    transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-}
 
 module.exports = router;

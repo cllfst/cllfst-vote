@@ -1,46 +1,28 @@
 var express = require('express')
 var router = express.Router()
-var nodemailer = require('nodemailer')
 var utils = require('../../util/utils')
 
 /* GET home page. */
 router.post('/', function(req, res, next) {
-    var senderAddress = req.body.senderAddress
-    var senderPassword = req.body.senderPassword
-    var emails = req.body.emails
+    var email = {
+        sender: req.body.sender,
+        password: req.body.password,
+        // to: "",
+        subject: "Elections",
+        // body: ""
+    }
 
-    emails.forEach(email => {
+    console.log(`Initializing ballot [requester:${req.body.sender}]`)
+    req.body.emails.forEach(to => {
+        email.to = to
         var votingLink = utils.createVotingLink()
+        email.body = 'Please use the following link to vote: ' + votingLink
         // TODO: write code to db
-        sendEmail(senderAddress, senderPassword, email, votingLink)
+        console.log(`email: ${JSON.stringify(email)}`)
+        utils.sendEmail(email)
     })
 
     res.json({"result": "true"})
 })
-
-function sendEmail(from, fromPassword, to, votingLink) {
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: from,
-            pass: fromPassword
-        }
-    })
-
-    var mailOptions = {
-        from: from,
-        to: to,
-        subject: "Elections",
-        text: 'Please use the following link to vote: ' + votingLink
-    }
-
-    transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-            console.log(error)
-        } else {
-            console.log('Email sent [to:' + to + 'response:' + info.response + ']')
-        }
-    })
-}
 
 module.exports = router

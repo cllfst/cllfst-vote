@@ -28,8 +28,6 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-console.log("Using address: " + process.env.EMAIL);
-// console.log("Using password: " + process.env.PASSWORD);
 
 
 /**
