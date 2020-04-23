@@ -4,40 +4,52 @@ var nodemailer = require('nodemailer')
 var randomstring = require("randomstring")
 
 
-function createVotingLink() {
-    var accessToken = randomstring.generate(64);
-    return process.env.DOMAIN_NAME + '/' + accessToken
-    
+function generateRandomString(length) {
+    if (!length) {
+        length = 64
+    }
+    return randomstring.generate(length);
 }
 
-function sendEmail(email) {
+function createVotingLink() {
+    var accessToken = generateRandomString();
+    return process.env.DOMAIN_NAME + '/' + accessToken   
+}
+
+function sendEmail(to, subject, body) {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: email.from,
-            pass: email.password
+            user: process.env.SENDER,
+            pass: process.env.PASSWORD
         }
     })
 
     var mailOptions = {
-        from: email.from,
-        to: email.to,
-        subject: email.subject,
-        text: email.body
+        from: process.env.SENDER,
+        to: to,
+        subject: subject,
+        text: body
     }
 
-    console.log(`Sending email [to:${email.to}]`)
+    console.log(`Sending email [to:${to}]`)
     transporter.sendMail(mailOptions, function(err, info) {
         if (err) {
-            console.log(`Error sending email [to:${email.to}, error:${err.message}]`)
+            console.log(`Error sending email [to:${to}, error:${err.message}]`)
             // console.log(err)
         } else {
-            console.log(`Email sent [to:${email.to}, response:${info.response}]`)
+            // console.log(`Email sent [to:${to}, response:${info.response}]`)
         }
     })
 }
 
+function isEmpty(object) {
+    return JSON.stringify(object) == JSON.stringify({})
+}
+
 module.exports = {
+    generateRandomString,
     createVotingLink,
-    sendEmail
+    sendEmail,
+    isEmpty
 }
