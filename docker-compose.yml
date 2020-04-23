@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  # app:
+  #   image: zguesmi/cllfst-vote:0.0.1
+  #   build: .
+  #   environment:
+  #     - NODE_ENV=production
+  #     - EMAIL
+  #     - PASSWORD
+  #     - DOMAIN_NAME
+  #   ports:
+  #     - 3000:3000
+
+  mongo:
+    image: mongo:4-xenial
+    container_name: mongo
+    ports:
+      - 27017:27017
+
+  mongo_ui:
+    image: mongo-express:0.49
+    container_name: mongo_ui
+    environment:
+    - ME_CONFIG_BASICAUTH_USERNAME=admin
+    - ME_CONFIG_BASICAUTH_PASSWORD=admin
+    ports:
+    - 8081:8081
+    depends_on:
+      - mongo
