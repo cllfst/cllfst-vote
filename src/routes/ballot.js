@@ -1,12 +1,13 @@
-var express = require('express')
-var router = express.Router()
-var utils = require('../util/utils')
+const express = require('express')
+const router = express.Router()
+const utils = require('../util/utils')
+const db = require('../models/db')
 
-/* GET home page. */
+
 router.post('/', function(req, res, next) {
-    var authorization = req.headers.authorization
-    var emails = req.body.emails
-    var subject = req.body.subject
+    const authorization = req.headers.authorization
+    const emails = req.body.emails
+    const subject = req.body.subject
 
     if (authorization !== process.env.ADMIN_PASSWORD) {
         return res.sendStatus(401)
@@ -22,15 +23,20 @@ router.post('/', function(req, res, next) {
                 .send("Please provide the email's subject!")
     }
 
-    console.log('Initializing ballot')
-    var array = []
+    console.log('\n#######################')
+    console.log('# Initializing ballot #')
+    console.log('#######################\n')
 
+    const savedBallot = db.initNewBallot("test")
+    console.log(savedBallot)
+
+    const array = []
     emails.forEach(to => {
-        var subject = "CLLFST Elections"
-        var body = 'Please use the following link to vote: '
-                + utils.createVotingLink()
-        // TODO: write code to db
-        console.log(`to: ${to}`)
+        const subject = "CLLFST Elections"
+        const votingLink = utils.createVotingLink()
+        const body = 'Please use the following link to vote: '
+                + votingLink
+        db.addTokenToBallot("test", votingLink.split('/')[1])
         array.push({to: to, subject: subject, body: body})
         utils.sendEmail(to, subject, body)
     })

@@ -33,14 +33,14 @@ function sendEmail(to, subject, body) {
     }
 
     console.log(`Sending email [to:${to}]`)
-    transporter.sendMail(mailOptions, function(err, info) {
-        if (err) {
-            console.log(`Error sending email [to:${to}, error:${err.message}]`)
-            // console.log(err)
-        } else {
-            // console.log(`Email sent [to:${to}, response:${info.response}]`)
-        }
-    })
+    // transporter.sendMail(mailOptions, function(err, info) {
+    //     if (err) {
+    //         console.log(`Error sending email [to:${to}, error:${err.message}]`)
+    //         // console.log(err)
+    //     } else {
+    //         // console.log(`Email sent [to:${to}, response:${info.response}]`)
+    //     }
+    // })
 }
 
 function isEmpty(object) {
