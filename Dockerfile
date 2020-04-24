@@ -4,9 +4,10 @@ ENV NODE_ENV production
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY src/package.json src/package-lock.json /app/
 RUN npm install --production --silent
-COPY . .
+COPY src /app
 
+WORKDIR /app
 EXPOSE 3000
 CMD npm start

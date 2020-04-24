@@ -18,7 +18,7 @@ function connect() {
         console.log('Connected to db')
     })
     db.on('error', err => {
-        console.error('Db connection error:', err.message())
+        console.error('Db connection error:', err)
     })
     db.on('close', _ => {
         console.log('Closed db connection')

@@ -11,22 +11,17 @@ function generateRandomString(length) {
     return randomstring.generate(length);
 }
 
-function createVotingLink() {
-    var accessToken = generateRandomString();
-    return process.env.DOMAIN_NAME + '/' + accessToken   
-}
-
-function sendEmail(to, subject, body) {
+function sendEmail(senderEmail, senderPassword, to, subject, body) {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: process.env.SENDER,
-            pass: process.env.PASSWORD
+            user: senderEmail,
+            pass: senderPassword
         }
     })
 
     var mailOptions = {
-        from: process.env.SENDER,
+        from: senderEmail,
         to: to,
         subject: subject,
         text: body
@@ -43,13 +38,12 @@ function sendEmail(to, subject, body) {
     // })
 }
 
-function isEmpty(object) {
-    return JSON.stringify(object) == JSON.stringify({})
-}
+// function isEmpty(object) {
+//     return JSON.stringify(object) == JSON.stringify({})
+// }
 
 module.exports = {
     generateRandomString,
-    createVotingLink,
     sendEmail,
-    isEmpty
+    // isEmpty
 }
