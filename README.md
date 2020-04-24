@@ -1,15 +1,13 @@
 # CLLFST voting app
 
 ```
-git clone https://github.com/cllfst/cllfst_vote.git
+# clone the repo
+git clone https://github.com/cllfst/cllfst-vote.git && cd cllfst-vote
 
-cd cllfst_vote
+# start usgin docker
+docker-compose up -d
 
-npm install
+# dev using docker
+docker-compose up -d --build
 
-PASSWORD=<your password> EMAIL=<your email> npm start
-
-Open browser at localhost:3000/
-
-You should see the message: "Please check you email inbox !"
 ```
