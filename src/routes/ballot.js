@@ -19,14 +19,14 @@ router.post('/', function(req, res, next) {
     }
 
     if (!subject || !ballotName || !Array.isArray(emails) || !Array.isArray(candidates)) {
-        return res.status(400)
-        .send("Missing some ballot's info! Ballot must have:"
-        + " a ballotName, a candidate list, a subject and an email list.")
+        const msg = "Missing some ballot's info! Ballot must have: a ballotName, "
+            + "a candidate list, a subject and an email list."
+        return res.status(400).json({"error": msg})
     }
 
     if (!isValidCandidateList(candidates)) {
         return res.status(400)
-            .send("Invalid candidate list")
+            .json({"error": "Invalid candidate list"})
     }
 
     const data = init(ballotName, candidates, subject, emails)

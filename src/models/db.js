@@ -1,7 +1,7 @@
 'user strict'
 
 const mongoose = require('mongoose')
-const BallotSchema = require('./ballot')
+const Ballot = require('./ballot')
 const appEnv = require('../util/app-env')
 
 const url = `mongodb://${appEnv.dbHost}:${appEnv.dbPort}/${appEnv.dbName}`
@@ -9,24 +9,25 @@ const db = connect()
 
 module.exports = {
     removeBallotByName: async (name) => {
-        return BallotSchema.deleteOne({'name': name})
+        return Ballot.deleteOne({'name': name})
     },
 
     newBallot: (name, candidates) => {
-        const ballot = new BallotSchema({
+        return new Ballot({
             name: name,
             startDate: Date.now(),
             endDate: Date.now(),
             tokens: [],
             candidates: candidates
-        })
-        return ballot.save()
+        }).save()
     },
-    
+
+    findBallotByName: (ballotName) => {
+        return Ballot.findOne({'name': ballotName})
+    },
+
     addTokenToBallot: async (ballotName, token) => {
-        const ballot = await BallotSchema.findOne({
-            name: ballotName
-        })
+        const ballot = await Ballot.findOne({name: ballotName})
         ballot.tokens.push(token)
         return ballot.save()
     },
