@@ -8,29 +8,36 @@ const url = `mongodb://${appEnv.dbHost}:${appEnv.dbPort}/${appEnv.dbName}`
 const db = connect()
 
 module.exports = {
-    removeBallotByName: async (name) => {
-        return Ballot.deleteOne({'name': name})
+    removeBallotByName: async (ballotName) => {
+        return Ballot.deleteOne({'ballotName': ballotName})
     },
 
-    newBallot: (name, candidates) => {
+    newBallot: (ballot) => {
         return new Ballot({
-            name: name,
-            startDate: Date.now(),
-            endDate: Date.now(),
+            ballotName: ballot.ballotName,
+            startDate: ballot.startDate,
+            endDate: ballot.endDate,
             tokens: [],
-            candidates: candidates
+            candidates: ballot.candidates
         }).save()
     },
 
     findBallotByName: (ballotName) => {
-        return Ballot.findOne({'name': ballotName})
+        return !ballotName ? null : Ballot.findOne({'ballotName': ballotName})
     },
 
     addTokenToBallot: async (ballotName, token) => {
-        const ballot = await Ballot.findOne({name: ballotName})
+        const ballot = await Ballot.findOne({ballotName: ballotName})
         ballot.tokens.push(token)
         return ballot.save()
     },
+
+    updateBallot: async (ballot) => {
+        return Ballot.findOneAndUpdate({'ballotName': ballot.ballotName}, ballot, {
+            useFindAndModify: false,
+            new: true
+        })
+    }
 
 }
 
@@ -54,9 +61,3 @@ function connect() {
 function disconnect() {
     db.close()
 }
-
-// const CandidateSchema = new CandidateSchema({
-//     name: String,
-//     responsibility: String,
-//     votes: Number
-// })

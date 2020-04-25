@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/index'));
 app.use('/ballots', require('./routes/ballot'));
-app.use('/vote', require('./routes/vote'));
+app.use('/votes', require('./routes/vote'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -43,7 +43,7 @@ app.use(function (err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    res.render('err');
 });
 
 module.exports = app;
