@@ -26,7 +26,7 @@ router.post('/', async function(req, res, next) {
     }
 
     const response = await init(req.body)
-    return res.status(200).json({"message": response})
+    return res.status(200).json({"result": response})
 })
 
 async function init(ballot) {
@@ -44,20 +44,18 @@ async function init(ballot) {
 
     initVotesForCandidates(ballot.candidates)
     const newBallot = await db.newBallot(ballot)
-    console.log(`Created ballot [name:${newBallot.name}]`)
+    console.log(`Created ballot [name:${newBallot.ballotName}]`)
 
     const senderEmail = appEnv.senderEmail
     const senderPassword = appEnv.senderPassword
-    let votingToken // TODO: remove this
     for (const to of ballot.emails) {
-        const subject = "CLLFST Elections"
-        votingToken = utils.generateRandomString()
+        const votingToken = utils.generateRandomString()
         const votingUrl = createVotingLink(ballot.ballotName, votingToken)
         const body = ballot.text.replace('{}', votingUrl)
         db.addTokenToBallot(ballot.ballotName, votingToken)
-        // utils.sendEmail(senderEmail, senderPassword, to, ballot.subject, body)    
+        utils.sendEmail(senderEmail, senderPassword, to, ballot.subject, body)    
     }
-    return createVotingLink(ballot.ballotName, votingToken)
+    return 'ok'
 }
 
 function isValidBallotDesc(ballot) {
