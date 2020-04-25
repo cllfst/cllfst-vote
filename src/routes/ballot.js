@@ -9,57 +9,67 @@ const db = require('../models/db')
 
 router.post('/', async function(req, res, next) {
     const authorization = req.headers.authorization
-    const emails = req.body.emails
-    const subject = req.body.subject
-    const ballotName = req.body.ballotName
-    const candidates = req.body.candidates
-
     if (!utils.isAdmin(authorization)) {
         return res.render('error', { status: 401, message: 'Unauthorized' });
     }
 
-    if (!subject || !ballotName || !Array.isArray(emails) || !Array.isArray(candidates)) {
-        const msg = "Missing some ballot's info! You must provide: a ballotName, "
-            + "a candidate list, a subject and an email list."
-        return res.render('error', { status: 400, message: msg });
+    if (!isValidBallotDesc(req.body)) {
+        const msg = "Invalid ballot description! "
+            + "You must provide those valid elements: "
+            + "ballotName, candidates, startDate, endDate, "
+            + "subject, text and emails."
+        return res.status(400).json({ "error": msg });
     }
 
-    if (!isValidCandidateList(candidates)) {
+    if (!isValidCandidateList(req.body.candidates)) {
         return res.render('error', { status: 400, message: 'Invalid candidate list' });
     }
 
-    const data = await init(ballotName, candidates, subject, emails)
-    res.render('error', {status: 200, message: data})
+    const response = await init(req.body)
+    return res.status(200).json({"message": response})
 })
 
-async function init(ballotName, candidates, subject, emails) {
+async function init(ballot) {
     console.log('\n#######################')
     console.log('# Initializing ballot #')
     console.log('#######################\n')
 
     ////////////////////
-    await db.removeBallotByName(ballotName) // TODO: remove this /!\
+    // TODO: remove this /!\
+    await db.removeBallotByName(ballot.ballotName)
     // if (await db.findBallotByName(ballotName)) {
     //     res.status(400).json({"error": "Duplicate ballot name"})
     // }
     ////////////////////
 
-    initVotesForCandidates(candidates)
-    const newBallot = await db.newBallot(ballotName, candidates)
+    initVotesForCandidates(ballot.candidates)
+    const newBallot = await db.newBallot(ballot)
     console.log(`Created ballot [name:${newBallot.name}]`)
 
     const senderEmail = appEnv.senderEmail
     const senderPassword = appEnv.senderPassword
     let votingToken // TODO: remove this
-    for (const to of emails) {
+    for (const to of ballot.emails) {
         const subject = "CLLFST Elections"
         votingToken = utils.generateRandomString()
-        const votingUrl = createVotingLink(ballotName, votingToken)
-        const body = 'Please use the following link to vote: ' + votingUrl
-        db.addTokenToBallot(ballotName, votingToken)
-        // utils.sendEmail(senderEmail, senderPassword, to, subject, body)    
+        const votingUrl = createVotingLink(ballot.ballotName, votingToken)
+        const body = ballot.text.replace('{}', votingUrl)
+        db.addTokenToBallot(ballot.ballotName, votingToken)
+        // utils.sendEmail(senderEmail, senderPassword, to, ballot.subject, body)    
     }
-    return createVotingLink(ballotName, votingToken)
+    return createVotingLink(ballot.ballotName, votingToken)
+}
+
+function isValidBallotDesc(ballot) {
+    const notNull = ballot.ballotName && ballot.startDate && ballot.endDate
+        && ballot.subject && ballot.text
+        && Array.isArray(ballot.emails) && Array.isArray(ballot.candidates)
+
+    ballot.startDate = new Date(ballot.startDate)
+    ballot.endDate = new Date(ballot.endDate)
+    const validDates = Date.now() < ballot.startDate.getTime()
+        && ballot.startDate.getTime() < ballot.endDate.getTime()    
+    return notNull && validDates
 }
 
 function isValidCandidateList(candidates) {

@@ -12,13 +12,13 @@ module.exports = {
         return Ballot.deleteOne({'name': name})
     },
 
-    newBallot: (name, candidates) => {
+    newBallot: (ballot) => {
         return new Ballot({
-            name: name,
-            startDate: Date.now(),
-            endDate: Date.now(),
+            name: ballot.ballotName,
+            startDate: ballot.startDate,
+            endDate: ballot.endDate,
             tokens: [],
-            candidates: candidates
+            candidates: ballot.candidates
         }).save()
     },
 
@@ -31,6 +31,14 @@ module.exports = {
         ballot.tokens.push(token)
         return ballot.save()
     },
+
+    updateBallot: async (ballot) => {
+        return Ballot.findOneAndUpdate({'name': ballot.ballotName}, ballot, {
+            useFindAndModify: false,
+            new: true
+        })
+        // return Ballot.findOne({'name': ballot.ballotName})
+    }
 
 }
 
@@ -54,9 +62,3 @@ function connect() {
 function disconnect() {
     db.close()
 }
-
-// const CandidateSchema = new CandidateSchema({
-//     name: String,
-//     responsibility: String,
-//     votes: Number
-// })

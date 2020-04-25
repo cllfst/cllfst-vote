@@ -10,14 +10,18 @@ router.get('/:ballotName', async function(req, res, next) {
     const ballot = await db.findBallotByName(ballotName)
     if (!ballot) {
         // return html page instead
-        return res.status(400).json({"error": "No ballot found"})
+        return res.render('error', {status: 400, message: 'No ballot found!'})
     }
+
+    // TODO: /!\ check start/end date for ballot
+    // console.log(isBeforeDeadline(ballot))
+
     const tokenStatus = checkVotingToken(ballot, votingToken)
     if (tokenStatus.notFound) {
-        return res.render('error', { status: 401, message: 'Token not found'});
+        return res.render('error', { status: 401, message: 'Invalid token!'});
     }
     if (tokenStatus.isExpired) {
-        return res.render('error', { status: 401, message: "Token expired"});
+        return res.render('error', { status: 401, message: "Token expired, you have already voted!"});
     }
     const candidatesPerRole = getCandidatesPerRole(ballot)
     return res.render('vote', {token: votingToken, roles: utils.roles, candidatesPerRole: candidatesPerRole})
@@ -27,12 +31,15 @@ router.post('/:ballotName', async function(req, res, next) {
 
     const ballotName = req.params.ballotName
     const votingToken = req.query.token
-    const vote = req.body.vote
+    const vote = req.body
 
     const ballot = await db.findBallotByName(ballotName)
     if (!ballot) {
         return res.render('error', { status: 404, message: "Ballot not found"});
     }
+
+    // TODO: /!\ check start/end date for ballot
+    // console.log(isBeforeDeadline(ballot))
 
     const tokenStatus = checkVotingToken(ballot, votingToken)
     if (tokenStatus.notFound) {
@@ -48,10 +55,14 @@ router.post('/:ballotName', async function(req, res, next) {
 
     registerVote(ballot, vote)
     expireToken(ballot, votingToken)
-    console.log(ballot)
-    // save in db
-    res.sendStatus(204)
+    // console.log(ballot)
+    console.log(await db.updateBallot(ballot))
+    res.render('success', {status: 200, message: 'Bravo!'})
 });
+
+function isBeforeDeadline(ballot) {
+    return Date.now() < ballot.endDate.getTime()
+}
 
 function checkVotingToken(ballot, votingToken) {
     const isValid = ballot.tokens.includes(votingToken)
@@ -92,7 +103,6 @@ function registerVote(ballot, vote) {
     for (let role of Object.keys(vote)) {
         const test = e => e.role === role && e.name === vote[role]
         const foundCandidate = ballot.candidates.find(test)
-        // console.log(found)
         if (!foundCandidate) {
             console.error(`Cannot vote for ${vote[role]} as ${role}`);
         }
