@@ -23,7 +23,7 @@ module.exports = {
     },
 
     findBallotByName: (ballotName) => {
-        return Ballot.findOne({'name': ballotName})
+        return !ballotName ? null : Ballot.findOne({'name': ballotName})
     },
 
     addTokenToBallot: async (ballotName, token) => {
