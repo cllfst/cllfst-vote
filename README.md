@@ -35,13 +35,11 @@ Run curl with:
 	"candidates": [
 		{
 		    "name": "cand1",
-		    "role": "IN",
-		    "votes": 3
+		    "role": "IN"
 		},
 		{
 		    "name": "cand2",
-		    "role": "SG",
-		    "votes": 3
+		    "role": "SG"
 		}
 	]
 }```
