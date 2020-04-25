@@ -11,9 +11,9 @@ services:
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - SENDER_EMAIL=${SENDER_EMAIL}
       - SENDER_PASSWORD=${SENDER_PASSWORD}
-      - DB_HOST=mongo
-      - DB_PORT=27017
-      - DB_NAME=cllfst-ballot
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
       - DOMAIN_NAME=${DOMAIN_NAME}
     ports:
       - 80:3000
