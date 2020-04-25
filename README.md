@@ -1,13 +1,25 @@
 # CLLFST voting app
 
+
+## clone the repo
 ```
-# clone the repo
-git clone https://github.com/cllfst/cllfst-vote.git && cd cllfst-vote
+git clone https://github.com/cllfst/cllfst-vote.git
+```
 
-# start usgin docker
-docker-compose up -d
+## Dev mode
+### install mongodb
+```
+# install mongodb
+$ sudo apt update && sudo apt install -y mongodb
+```
 
-# dev using docker
-docker-compose up -d --build
+### install packages & start the app
+```
+cd cllfst-vote/src && npm i && npm run dev
+```
+
+# Using docker
+```
+cd cllfst-vote/ && docker-compose up -d --build
 
 ```
