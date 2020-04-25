@@ -4,6 +4,7 @@ const express = require('express')
 const router = express.Router()
 var Url = require('url-parse')
 const utils = require('../util/utils')
+const appEnv = require('../util/app-env')
 const db = require('../models/db')
 
 router.post('/', function(req, res, next) {
@@ -13,7 +14,7 @@ router.post('/', function(req, res, next) {
     const ballotName = req.body.ballotName
     const candidates = req.body.candidates
 
-    if (authorization !== process.env.ADMIN_PASSWORD) {
+    if (!utils.isAuthorized(authorization)) {
         return res.sendStatus(401)
     }
 
@@ -62,12 +63,12 @@ function initVotesForCandidates(candidates) {
 
 function createVotingLink() {
     var accessToken = utils.generateRandomString()
-    return new Url('https://' + process.env.DOMAIN_NAME + '/votes?token=' + accessToken, true)
+    return new Url('https://' + appEnv.domainName + '/votes?token=' + accessToken, true)
 }
 
 function sendEmailsAndSaveTokens(ballotName, emails, array) {
-    const senderEmail = process.env.SENDER_EMAIL
-    const senderPassword = process.env.SENDER_PASSWORD
+    const senderEmail = appEnv.senderEmail
+    const senderPassword = appEnv.senderPassword
     emails.forEach(to => {
         const subject = "CLLFST Elections"
         const votingUrl = createVotingLink()

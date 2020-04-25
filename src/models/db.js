@@ -2,11 +2,9 @@
 
 const mongoose = require('mongoose')
 const BallotSchema = require('./ballot')
+const appEnv = require('../util/app-env')
 
-const dbHost = process.env.DB_HOST
-const dbPort = process.env.DB_PORT
-const dbName = process.env.DB_NAME
-const url = `mongodb://${dbHost}:${dbPort}/${dbName}`
+const url = `mongodb://${appEnv.dbHost}:${appEnv.dbPort}/${appEnv.dbName}`
 
 connect()
 

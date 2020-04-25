@@ -1,9 +1,12 @@
 'use strict'
 
-var nodemailer = require('nodemailer')
-var randomstring = require("randomstring")
+const nodemailer = require('nodemailer')
+const randomstring = require('randomstring')
+const appEnv = require('./app-env')
 
-const roles = ['SG', 'IN', 'EX', 'MA', 'SP', "ME"]
+function isAuthorized(authorization) {
+    return authorization !== appEnv.adminPassword
+}
 
 function generateRandomString(length) {
     if (!length) {
@@ -13,21 +16,21 @@ function generateRandomString(length) {
 }
 
 function sendEmail(senderEmail, senderPassword, to, subject, body) {
-    var transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
             user: senderEmail,
             pass: senderPassword
         }
     })
-
-    var mailOptions = {
+    
+    const mailOptions = {
         from: senderEmail,
         to: to,
         subject: subject,
         text: body
     }
-
+    
     console.log(`Sending email [to:${to}]`)
     transporter.sendMail(mailOptions, function(err, info) {
         if (err) {
@@ -37,7 +40,7 @@ function sendEmail(senderEmail, senderPassword, to, subject, body) {
 }
 
 function isValidRole(role) {
-    return roles.indexOf(role) !== -1
+    return ['SG', 'IN', 'EX', 'MA', 'SP', "ME"].indexOf(role) !== -1
 }
 
 // function isEmpty(object) {
