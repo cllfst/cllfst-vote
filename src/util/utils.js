@@ -7,6 +7,8 @@ const appEnv = require('./app-env')
 const roles = ['SG', 'IN', 'EX', 'MA', 'SP', 'ME', 'CM']
 
 module.exports = {
+    roles: roles,
+
     isAdmin: (authorization) => {
         return authorization === appEnv.adminPassword
     },

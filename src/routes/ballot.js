@@ -29,7 +29,7 @@ router.post('/', async function(req, res, next) {
     }
 
     const data = await init(ballotName, candidates, subject, emails)
-    res.render('error', {status: 200, message: "done"})
+    res.render('error', {status: 200, message: data})
 })
 
 async function init(ballotName, candidates, subject, emails) {
@@ -78,7 +78,7 @@ function initVotesForCandidates(candidates) {
 }
 
 function createVotingLink(ballotName, votingToken) {
-    return 'https://' + appEnv.domainName
+    return appEnv.protocol + '://' + appEnv.domainName
         + '/votes/' + ballotName + '?token=' + votingToken
 }
 

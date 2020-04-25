@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title> Vote </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <h1>Vote page</h1>
+  <p>Form goes here</p>
+
+  <form action="" method="post">
+    <% for (const role of roles) { %>
+      <div>
+        <h3> <%= role %> </h3>
+        <% for (const name of candidatesPerRole[role]) { %>
+          <div>
+            <label for="<%= role %>" > <%= name %> </label>
+            <input type="radio" name="<%= role %>" value="<%= name %>">
+          </div>
+        <% } %>
+      </div>
+    <% } %>
+
+    <br>
+    <br>
+    <div><input type="submit" value="Submit"></div>  
+  </form>
+  
+</body>
+</html>

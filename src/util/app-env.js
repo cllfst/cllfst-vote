@@ -8,5 +8,6 @@ module.exports = {
     dbHost: process.env.DB_HOST ? process.env.DB_HOST : 'localhost',
     dbPort: process.env.DB_PORT ? process.env.DB_PORT : 27017,
     dbName: process.env.DB_NAME ? process.env.DB_NAME : 'cllfs-ballot',
-    domainName: process.env.DOMAIN_NAME ? process.env.DOMAIN_NAME : 'vote.cllfs.org.tn',
+    protocol: process.env.PROTOCOL ? process.env.PROTOCOL : 'http',
+    domainName: process.env.DOMAIN_NAME ? process.env.DOMAIN_NAME : 'localhost:3000',
 }
