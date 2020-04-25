@@ -32,9 +32,6 @@ function sendEmail(senderEmail, senderPassword, to, subject, body) {
     transporter.sendMail(mailOptions, function(err, info) {
         if (err) {
             console.log(`Error sending email [to:${to}, error:${err.message}]`)
-            // console.log(err)
-        } else {
-            // console.log(`Email sent [to:${to}, response:${info.response}]`)
         }
     })
 }
