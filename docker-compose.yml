@@ -13,7 +13,7 @@ services:
       - SENDER_PASSWORD=${SENDER_PASSWORD}
       - DB_HOST=mongo
       - DB_PORT=27017
-      - DB_NAME=ballot
+      - DB_NAME=cllfst-ballot
       - DOMAIN_NAME=${DOMAIN_NAME}
     ports:
       - 80:3000
