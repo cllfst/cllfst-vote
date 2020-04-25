@@ -84,18 +84,4 @@ function createVotingLink() {
     return new Url('https://' + appEnv.domainName + '/votes?token=' + accessToken, true)
 }
 
-// function sendEmailsAndSaveTokens(ballotName, emails, array) {
-//     const senderEmail = appEnv.senderEmail
-//     const senderPassword = appEnv.senderPassword
-//     emails.forEach(to => {
-//         const subject = "CLLFST Elections"
-//         const votingUrl = createVotingLink()
-//         const body = 'Please use the following link to vote: '
-//                 + votingUrl
-//         db.addTokenToBallot(ballotName, votingUrl.query.token)
-//         array.push({to: to, subject: subject, body: body})
-//         utils.sendEmail(senderEmail, senderPassword, to, subject, body)
-//     })
-// }
-
 module.exports = router
