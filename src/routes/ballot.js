@@ -15,23 +15,22 @@ router.post('/', function(req, res, next) {
     const candidates = req.body.candidates
 
     if (!utils.isAdmin(authorization)) {
-        return res.sendStatus(401)
+        return res.render('error', { status: 401, message: 'Unauthorized' });
     }
 
     if (!subject || !ballotName || !Array.isArray(emails) || !Array.isArray(candidates)) {
         const msg = "Missing some ballot's info! Ballot must have: a ballotName, "
             + "a candidate list, a subject and an email list."
-        return res.status(400).json({"error": msg})
+        return res.render('error', { status: 400, message: msg });
     }
 
     if (!isValidCandidateList(candidates)) {
-        return res.status(400)
-            .json({"error": "Invalid candidate list"})
+        return res.render('error', { status: 400, message: 'Invalid candidate list' });
     }
 
     const data = init(ballotName, candidates, subject, emails)
         .then(data => res.json({"result": "true", "data": data}))
-        .catch(err => res.json({"error": err.message}))
+        .catch(err => res.render('error', { status: 400, message: err.messag e}));
     
 })
 
