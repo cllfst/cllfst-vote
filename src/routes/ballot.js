@@ -30,7 +30,7 @@ router.post('/', function(req, res, next) {
 
     const data = init(ballotName, candidates, subject, emails)
         .then(data => res.json({"result": "true", "data": data}))
-        .catch(err => res.render('error', { status: 400, message: err.messag e}));
+        .catch(err => res.render('error', { status: 400, message: err.message }));
     
 })
 
