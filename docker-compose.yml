@@ -5,6 +5,7 @@ services:
   app:
     image: zguesmi/cllfst-vote:0.0.1
     build: .
+    container_name: app
     environment:
       - NODE_ENV=production
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}
@@ -22,8 +23,8 @@ services:
   mongo:
     image: mongo:4-xenial
     container_name: mongo
-    ports:
-      - 27017:27017
+    # ports:
+    #   - 27017:27017
     volumes:
       - db-data:/data/db
 
