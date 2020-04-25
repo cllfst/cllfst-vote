@@ -10,7 +10,7 @@ const CandidateSchema = new Schema({
 })
 
 const BallotSchema = new Schema({
-    name: String,
+    ballotName: String,
     startDate: Date,
     endDate: Date,
     tokens: Array,

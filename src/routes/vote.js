@@ -55,8 +55,7 @@ router.post('/:ballotName', async function(req, res, next) {
 
     registerVote(ballot, vote)
     expireToken(ballot, votingToken)
-    // console.log(ballot)
-    console.log(await db.updateBallot(ballot))
+    await db.updateBallot(ballot)
     res.render('success', {status: 200, message: 'Bravo!'})
 });
 

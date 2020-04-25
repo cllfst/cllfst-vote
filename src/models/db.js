@@ -8,13 +8,13 @@ const url = `mongodb://${appEnv.dbHost}:${appEnv.dbPort}/${appEnv.dbName}`
 const db = connect()
 
 module.exports = {
-    removeBallotByName: async (name) => {
-        return Ballot.deleteOne({'name': name})
+    removeBallotByName: async (ballotName) => {
+        return Ballot.deleteOne({'ballotName': ballotName})
     },
 
     newBallot: (ballot) => {
         return new Ballot({
-            name: ballot.ballotName,
+            ballotName: ballot.ballotName,
             startDate: ballot.startDate,
             endDate: ballot.endDate,
             tokens: [],
@@ -23,21 +23,20 @@ module.exports = {
     },
 
     findBallotByName: (ballotName) => {
-        return !ballotName ? null : Ballot.findOne({'name': ballotName})
+        return !ballotName ? null : Ballot.findOne({'ballotName': ballotName})
     },
 
     addTokenToBallot: async (ballotName, token) => {
-        const ballot = await Ballot.findOne({name: ballotName})
+        const ballot = await Ballot.findOne({ballotName: ballotName})
         ballot.tokens.push(token)
         return ballot.save()
     },
 
     updateBallot: async (ballot) => {
-        return Ballot.findOneAndUpdate({'name': ballot.ballotName}, ballot, {
+        return Ballot.findOneAndUpdate({'ballotName': ballot.ballotName}, ballot, {
             useFindAndModify: false,
             new: true
         })
-        // return Ballot.findOne({'name': ballot.ballotName})
     }
 
 }
