@@ -46,7 +46,7 @@ async function init(ballotName, candidates, subject, emails) {
 
     initVotesForCandidates(candidates)
     const newBallot = await db.newBallot(ballotName, candidates)
-    console.log('Created ballot [name:{}]', newBallot.name)
+    console.log(`Created ballot [name:${newBallot.name}]`)
 
     const array = []
     const senderEmail = appEnv.senderEmail
@@ -54,10 +54,9 @@ async function init(ballotName, candidates, subject, emails) {
     for (const to of emails) {
         const subject = "CLLFST Elections"
         const votingUrl = createVotingLink()
-        const body = 'Please use the following link to vote: '
-                + votingUrl
+        const body = 'Please use the following link to vote: ' + votingUrl
         db.addTokenToBallot(ballotName, votingUrl.query.token)
-        array.push({to: to, subject: subject, body: body})
+        array.push({to: to, body: body})
         // utils.sendEmail(senderEmail, senderPassword, to, subject, body)
     
     }

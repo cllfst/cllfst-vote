@@ -14,6 +14,7 @@ const BallotSchema = new Schema({
     startDate: Date,
     endDate: Date,
     tokens: Array,
+    expiredTokens: Array,
     candidates: [CandidateSchema]
 })
 
