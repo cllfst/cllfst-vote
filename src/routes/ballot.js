@@ -15,22 +15,21 @@ router.post('/', async function(req, res, next) {
     const candidates = req.body.candidates
 
     if (!utils.isAdmin(authorization)) {
-        return res.sendStatus(401)
+        return res.render('error', { status: 401, message: 'Unauthorized' });
     }
 
     if (!subject || !ballotName || !Array.isArray(emails) || !Array.isArray(candidates)) {
         const msg = "Missing some ballot's info! You must provide: a ballotName, "
             + "a candidate list, a subject and an email list."
-        return res.status(400).json({"error": msg})
+        return res.render('error', { status: 400, message: msg });
     }
 
     if (!isValidCandidateList(candidates)) {
-        return res.status(400)
-            .json({"error": "Invalid candidate list"})
+        return res.render('error', { status: 400, message: 'Invalid candidate list' });
     }
 
     const data = await init(ballotName, candidates, subject, emails)
-    res.json({"result": data})    
+    res.render('error', {status: 200, message: "done"})
 })
 
 async function init(ballotName, candidates, subject, emails) {

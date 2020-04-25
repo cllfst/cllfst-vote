@@ -22,7 +22,7 @@ router.post('/:ballotName', async function(req, res, next) {
 
     const ballot = await db.findBallotByName(ballotName)
     if (!ballot) {
-        return res.status(404).json({"error": "Ballot not found"})
+        return res.render('error', { status: 404, message: "Ballot not found"});
     }
 
     const isExistingValidToken = ballot.tokens.includes(votingToken)
@@ -30,15 +30,15 @@ router.post('/:ballotName', async function(req, res, next) {
     const isExistingToken = isExistingValidToken || isExistingExpiredToken
 
     if (!isExistingToken) {
-        return res.sendStatus(401)
+        return res.render('error', { status: 401, message: 'Token not found'});
     }
 
     if (isExistingExpiredToken) {
-        return res.status(401).json({"error": "Token expired"})
+        return res.render('error', { status: 401, message: "Token expired"});
     }
 
     if (!isValidVote(ballot, vote)) {
-        return res.status(400).json({"error": "Invalid vote"})
+        return res.render('error', { status: 400, message: 'Invalid vote'});
     }
 
     registerVote(ballot, vote)
