@@ -14,7 +14,7 @@ router.post('/', function(req, res, next) {
     const ballotName = req.body.ballotName
     const candidates = req.body.candidates
 
-    if (!utils.isAuthorized(authorization)) {
+    if (!utils.isAdmin(authorization)) {
         return res.sendStatus(401)
     }
 
@@ -29,22 +29,40 @@ router.post('/', function(req, res, next) {
             .send("Invalid candidate list")
     }
 
+    const data = init(ballotName, candidates, subject, emails)
+        .then(data => res.json({"result": "true", "data": data}))
+        .catch(err => res.json({"error": err.message}))
+    
+})
+
+async function init(ballotName, candidates, subject, emails) {
     console.log('\n#######################')
     console.log('# Initializing ballot #')
     console.log('#######################\n')
+
+    ////////////////////
+    await db.removeBallotByName(ballotName) // TODO: remove this /!\
+    ////////////////////
+
     initVotesForCandidates(candidates)
-    const removedBallot = await db.removeBallotByName(ballotName)
-    console.log("removedBallot")
-    console.log(removedBallot)
     const newBallot = await db.newBallot(ballotName, candidates)
-    // console.log('Created ballot: ' + newBallot.name)
-    console.log('newBallot')
-    console.log(newBallot)
+    console.log('Created ballot [name:{}]', newBallot.name)
 
     const array = []
-    // sendEmailsAndSaveTokens(ballotName, emails, array)
-    res.json({"result": "true", "data": array})
-})
+    const senderEmail = appEnv.senderEmail
+    const senderPassword = appEnv.senderPassword
+    for (const to of emails) {
+        const subject = "CLLFST Elections"
+        const votingUrl = createVotingLink()
+        const body = 'Please use the following link to vote: '
+                + votingUrl
+        db.addTokenToBallot(ballotName, votingUrl.query.token)
+        array.push({to: to, subject: subject, body: body})
+        // utils.sendEmail(senderEmail, senderPassword, to, subject, body)
+    
+    }
+    return array
+}
 
 function isValidCandidateList(candidates) {
     if (!Array.isArray(candidates) || candidates.length === 0) {
@@ -66,18 +84,18 @@ function createVotingLink() {
     return new Url('https://' + appEnv.domainName + '/votes?token=' + accessToken, true)
 }
 
-function sendEmailsAndSaveTokens(ballotName, emails, array) {
-    const senderEmail = appEnv.senderEmail
-    const senderPassword = appEnv.senderPassword
-    emails.forEach(to => {
-        const subject = "CLLFST Elections"
-        const votingUrl = createVotingLink()
-        const body = 'Please use the following link to vote: '
-                + votingUrl
-        db.addTokenToBallot(ballotName, votingUrl.query.token)
-        array.push({to: to, subject: subject, body: body})
-        utils.sendEmail(senderEmail, senderPassword, to, subject, body)
-    })
-}
+// function sendEmailsAndSaveTokens(ballotName, emails, array) {
+//     const senderEmail = appEnv.senderEmail
+//     const senderPassword = appEnv.senderPassword
+//     emails.forEach(to => {
+//         const subject = "CLLFST Elections"
+//         const votingUrl = createVotingLink()
+//         const body = 'Please use the following link to vote: '
+//                 + votingUrl
+//         db.addTokenToBallot(ballotName, votingUrl.query.token)
+//         array.push({to: to, subject: subject, body: body})
+//         utils.sendEmail(senderEmail, senderPassword, to, subject, body)
+//     })
+// }
 
 module.exports = router

@@ -5,70 +5,54 @@ const BallotSchema = require('./ballot')
 const appEnv = require('../util/app-env')
 
 const url = `mongodb://${appEnv.dbHost}:${appEnv.dbPort}/${appEnv.dbName}`
+const db = connect()
 
-connect()
+module.exports = {
+    removeBallotByName: async (name) => {
+        return BallotSchema.deleteOne({'name': name})
+    },
 
-async function connect() {
-    await mongoose.connect(url, {
+    newBallot: (name, candidates) => {
+        const ballot = new BallotSchema({
+            name: name,
+            startDate: Date.now(),
+            endDate: Date.now(),
+            tokens: [],
+            candidates: candidates
+        })
+        return ballot.save()
+    },
+    
+    addTokenToBallot: async (ballotName, token) => {
+        const ballot = await BallotSchema.findOne({
+            name: ballotName
+        })
+        ballot.tokens.push(token)
+        return ballot.save()
+    },
+
+}
+
+function connect() {
+    mongoose.connect(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
-    const db = mongoose.connection
-    db.once('open', _ => {
+    mongoose.connection.once('open', _ => {
         console.log('Connected to db')
     })
-    db.on('error', err => {
+    mongoose.connection.on('error', err => {
         console.error('Db connection error:', err)
     })
-    db.on('close', _ => {
+    mongoose.connection.on('close', _ => {
         console.log('Closed db connection')
     })
+    return mongoose.connection
 }
 
-async function disconnect() {
-    await mongoose.connection.close()
+function disconnect() {
+    db.close()
 }
-
-async function newBallot(name, candidates) {
-    // connect()
-    const ballot = new BallotSchema({
-        name: name,
-        startDate: Date.now(),
-        endDate: Date.now(),
-        tokens: [],
-        candidates: candidates
-    })
-    const saved = await ballot.save()
-    // console.log(saved)
-    // console.log('saved')
-    // disconnect()
-    return saved
-}
-
-async function removeBallotByName(name) {
-    return await BallotSchema.deleteOne({'name': name})
-    // console.log('removed ballot');
-}
-
-async function addTokenToBallot(ballotName, token) {
-    // connect()
-    const ballot = await BallotSchema.findOne({
-        name: ballotName
-    })
-
-    ballot.tokens.push(token)
-    const saved = await ballot.save()
-    // disconnect()
-    return saved
-}
-
-module.exports = {
-    newBallot,
-    removeBallotByName,
-    addTokenToBallot
-}
-
-
 
 // const CandidateSchema = new CandidateSchema({
 //     name: String,
