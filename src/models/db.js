@@ -1,3 +1,5 @@
+'user strict'
+
 const mongoose = require('mongoose')
 const BallotSchema = require('./ballot')
 
@@ -8,10 +10,10 @@ const url = `mongodb://${dbHost}:${dbPort}/${dbName}`
 
 connect()
 
-function connect() {
-    mongoose.connect(url, {
+async function connect() {
+    await mongoose.connect(url, {
         useNewUrlParser: true,
-        // useUnifiedTopology: true
+        useUnifiedTopology: true
     })
     const db = mongoose.connection
     db.once('open', _ => {
@@ -25,27 +27,29 @@ function connect() {
     })
 }
 
-function disconnect() {
-    mongoose.connection.close()
+async function disconnect() {
+    await mongoose.connection.close()
 }
 
-async function initNewBallot(name) {
+async function newBallot(name, candidates) {
     // connect()
     const ballot = new BallotSchema({
         name: name,
         startDate: Date.now(),
         endDate: Date.now(),
         tokens: [],
-        candidates: []
+        candidates: candidates
     })
-    const saved = await  ballot.save(function (err, document) {
-        if (err) {
-            console.error(err)
-        }
-    })
-
+    const saved = await ballot.save()
+    // console.log(saved)
+    // console.log('saved')
     // disconnect()
     return saved
+}
+
+async function removeBallotByName(name) {
+    return await BallotSchema.deleteOne({'name': name})
+    // console.log('removed ballot');
 }
 
 async function addTokenToBallot(ballotName, token) {
@@ -61,7 +65,8 @@ async function addTokenToBallot(ballotName, token) {
 }
 
 module.exports = {
-    initNewBallot,
+    newBallot,
+    removeBallotByName,
     addTokenToBallot
 }
 

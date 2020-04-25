@@ -3,6 +3,7 @@
 var nodemailer = require('nodemailer')
 var randomstring = require("randomstring")
 
+const roles = ['SG', 'IN', 'EX', 'MA', 'SP', "ME"]
 
 function generateRandomString(length) {
     if (!length) {
@@ -28,14 +29,18 @@ function sendEmail(senderEmail, senderPassword, to, subject, body) {
     }
 
     console.log(`Sending email [to:${to}]`)
-    // transporter.sendMail(mailOptions, function(err, info) {
-    //     if (err) {
-    //         console.log(`Error sending email [to:${to}, error:${err.message}]`)
-    //         // console.log(err)
-    //     } else {
-    //         // console.log(`Email sent [to:${to}, response:${info.response}]`)
-    //     }
-    // })
+    transporter.sendMail(mailOptions, function(err, info) {
+        if (err) {
+            console.log(`Error sending email [to:${to}, error:${err.message}]`)
+            // console.log(err)
+        } else {
+            // console.log(`Email sent [to:${to}, response:${info.response}]`)
+        }
+    })
+}
+
+function isValidRole(role) {
+    return roles.indexOf(role) !== -1
 }
 
 // function isEmpty(object) {
@@ -44,6 +49,7 @@ function sendEmail(senderEmail, senderPassword, to, subject, body) {
 
 module.exports = {
     generateRandomString,
+    isValidRole,
     sendEmail,
     // isEmpty
 }

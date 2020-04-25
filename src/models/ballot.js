@@ -1,9 +1,11 @@
+'use strict'
+
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const CandidateSchema = new Schema({
     name: String,
-    responsibility: String,
+    role: String,
     votes: Number
 })
 
