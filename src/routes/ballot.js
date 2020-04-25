@@ -40,6 +40,9 @@ async function init(ballotName, candidates, subject, emails) {
 
     ////////////////////
     await db.removeBallotByName(ballotName) // TODO: remove this /!\
+    // if (await db.findBallotByName(ballotName)) {
+    //     res.status(400).json({"error": "Duplicate ballot name"})
+    // }
     ////////////////////
 
     initVotesForCandidates(candidates)
