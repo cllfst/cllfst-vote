@@ -4,6 +4,8 @@ const nodemailer = require('nodemailer')
 const randomstring = require('randomstring')
 const appEnv = require('./app-env')
 
+const roles = ['SG', 'IN', 'EX', 'MA', 'SP', "ME"]
+
 module.exports = {
     isAdmin: (authorization) => {
         return authorization === appEnv.adminPassword
@@ -41,10 +43,6 @@ module.exports = {
     },
     
     isValidRole: (role) => {
-        return ['SG', 'IN', 'EX', 'MA', 'SP', "ME"].indexOf(role) !== -1
+        return roles.includes(role)
     },
-    
-    // function isEmpty(object) {
-    //     return JSON.stringify(object) == JSON.stringify({})
-    // }
 }
