@@ -6,7 +6,7 @@ const appEnv = require('./app-env')
 
 module.exports = {
     isAdmin: (authorization) => {
-        return authorization !== appEnv.adminPassword
+        return authorization === appEnv.adminPassword
     },
     
     generateRandomString: (length) => {
