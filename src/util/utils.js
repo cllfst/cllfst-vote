@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer')
 const randomstring = require('randomstring')
 const appEnv = require('./app-env')
 
-const roles = ['SG', 'IN', 'EX', 'MA', 'SP', "ME"]
+const roles = ['SG', 'IN', 'EX', 'MA', 'SP', 'ME', 'CM']
 
 module.exports = {
     isAdmin: (authorization) => {

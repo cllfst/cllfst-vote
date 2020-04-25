@@ -7,7 +7,7 @@ const utils = require('../util/utils')
 const appEnv = require('../util/app-env')
 const db = require('../models/db')
 
-router.post('/', function(req, res, next) {
+router.post('/', async function(req, res, next) {
     const authorization = req.headers.authorization
     const emails = req.body.emails
     const subject = req.body.subject
@@ -19,7 +19,7 @@ router.post('/', function(req, res, next) {
     }
 
     if (!subject || !ballotName || !Array.isArray(emails) || !Array.isArray(candidates)) {
-        const msg = "Missing some ballot's info! Ballot must have: a ballotName, "
+        const msg = "Missing some ballot's info! You must provide: a ballotName, "
             + "a candidate list, a subject and an email list."
         return res.status(400).json({"error": msg})
     }
@@ -29,10 +29,8 @@ router.post('/', function(req, res, next) {
             .json({"error": "Invalid candidate list"})
     }
 
-    const data = init(ballotName, candidates, subject, emails)
-        .then(data => res.json({"result": "true", "data": data}))
-        .catch(err => res.json({"error": err.message}))
-    
+    const data = await init(ballotName, candidates, subject, emails)
+    res.json({"result": data})    
 })
 
 async function init(ballotName, candidates, subject, emails) {
@@ -48,23 +46,22 @@ async function init(ballotName, candidates, subject, emails) {
     const newBallot = await db.newBallot(ballotName, candidates)
     console.log(`Created ballot [name:${newBallot.name}]`)
 
-    const array = []
     const senderEmail = appEnv.senderEmail
     const senderPassword = appEnv.senderPassword
+    let votingToken // TODO: remove this
     for (const to of emails) {
         const subject = "CLLFST Elections"
-        const votingUrl = createVotingLink()
+        votingToken = utils.generateRandomString()
+        const votingUrl = createVotingLink(ballotName, votingToken)
         const body = 'Please use the following link to vote: ' + votingUrl
-        db.addTokenToBallot(ballotName, votingUrl.query.token)
-        array.push({to: to, body: body})
-        // utils.sendEmail(senderEmail, senderPassword, to, subject, body)
-    
+        db.addTokenToBallot(ballotName, votingToken)
+        // utils.sendEmail(senderEmail, senderPassword, to, subject, body)    
     }
-    return array
+    return createVotingLink(ballotName, votingToken)
 }
 
 function isValidCandidateList(candidates) {
-    if (!Array.isArray(candidates) || candidates.length === 0) {
+    if (!Array.isArray(candidates) || candidates.length === 0) {        
         return false
     }
     return candidates.every(candidate =>
@@ -78,9 +75,9 @@ function initVotesForCandidates(candidates) {
     })
 }
 
-function createVotingLink() {
-    var accessToken = utils.generateRandomString()
-    return new Url('https://' + appEnv.domainName + '/votes?token=' + accessToken, true)
+function createVotingLink(ballotName, votingToken) {
+    return 'https://' + appEnv.domainName
+        + '/votes/' + ballotName + '?token=' + votingToken
 }
 
 module.exports = router
