@@ -18,14 +18,6 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-/*
- * Steps:
- *      - Create admin token on boot
- *      - Call /init endpoint with email addresses
- *      - Send emails
- *      - Call /vote
- */
-
 app.use('/', require('./routes/index'));
 app.use('/ballots', require('./routes/ballot'));
 app.use('/votes', require('./routes/vote'));
