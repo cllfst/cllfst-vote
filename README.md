@@ -47,7 +47,6 @@ DOMAIN_NAME=domain.com
 Start containers
 ```
 cd cllfst-vote/ && docker-compose up -d --build
-
 ```
 
 ## Init new ballot
