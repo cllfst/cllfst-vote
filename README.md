@@ -1,24 +1,51 @@
 # CLLFST voting app
 
 
-## clone the repo
+## Clone the repo
 ```
 git clone https://github.com/cllfst/cllfst-vote.git
 ```
 
-## Dev mode
+## Run in dev mode
 ### install mongodb
 ```
 # install mongodb
 $ sudo apt update && sudo apt install -y mongodb
 ```
 
-### install packages & start the app
+### Install packages & start the app
 ```
 cd cllfst-vote/src && npm i && npm run dev
 ```
 
+### Send emails
+If you want the app to send emails, you should provide correct
+email account credentials (without two factors authentication).
+You should also modify the security config of your account.
+
+```
+SENDER_EMAIL=<sender email address> SENDER_PASSWORD=<sender email password> npm run dev
+```
+
 # Using docker
+cd inside the projects folder and add a .env file with your config:
+```
+cd cllfst-vote/
+touch .env
+cat .env
+
+ADMIN_PASSWORD=<whatever>
+SENDER_EMAIL=<sender email>
+SENDER_PASSWORD=<sender password>
+DB_HOST=<host>
+DB_PORT=<port>
+DB_NAME=<db name>
+DB_UI_USERNAME=<whatever>
+DB_UI_PASSWORD=<whatever>
+DOMAIN_NAME=domain.com
+```
+
+Start containers
 ```
 cd cllfst-vote/ && docker-compose up -d --build
 
