@@ -3,11 +3,13 @@
 
 <head>
   <title> Vote </title>
-  <link rel="stylesheet" type="text/css" href="/stylesheets/util.css">
-  <link rel="stylesheet" type="text/css" href="/stylesheets/vote.css">
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="/fonts/vendor/bootstrap/css/bootstrap.min.css">
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -22,22 +24,16 @@
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="/fonts/vendor/daterangepicker/daterangepicker.css">
   <!--===============================================================================================-->
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/util.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/vote.css">
 </head>
 
 <body>
 
-
   <div class="container-contact100">
     <div class="wrap-contact100">
       <form class="contact100-form validate-form" method="POST" action='/vote'>
-        <span class="contact100-form-title">
-          Vote Here!
-        </span>
-
+        <span class="contact100-form-title"> Vote Here! </span>
 
         <% for (const role of roles) { %>
         <div class="wrap-input100 input100-select">
@@ -54,15 +50,11 @@
         </div>
         <% } %>
 
-
         <div class="container-contact100-form-btn">
           <div class="wrap-contact100-form-btn">
             <div class="contact100-form-bgbtn"></div>
             <button class="contact100-form-btn">
-              <span>
-                Submit
-                <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
-              </span>
+              <span> Submit <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
             </button>
           </div>
         </div>
@@ -70,14 +62,11 @@
     </div>
   </div>
 
-
   </form>
   </div>
   </div>
   </div>
 
-
-  </script>
   <!--===============================================================================================-->
   <script src="/fonts/vendor/daterangepicker/moment.min.js"></script>
   <script src="/fonts/vendor/daterangepicker/daterangepicker.js"></script>
@@ -85,17 +74,6 @@
   <script src="/fonts/vendor/countdowntime/countdowntime.js"></script>
   <!--===============================================================================================-->
   <script src="/fonts/votejs/main.js"></script>
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'UA-23581568-13');
-  </script>
-
 
 </body>
 
