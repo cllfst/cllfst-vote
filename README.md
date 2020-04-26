@@ -53,7 +53,7 @@ cd cllfst-vote/ && docker-compose up -d --build
 ## Init new ballot
 Run curl/postman with:
 - `Athorization` header set to admin password
-- This following as the body
+- This following body
 ```
 url: http://localhost:3000/ballots
 
