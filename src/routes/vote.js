@@ -9,7 +9,6 @@ router.get('/:ballotName', async function(req, res, next) {
     const votingToken = req.query.token
     const ballot = await db.findBallotByName(ballotName)
     if (!ballot) {
-        // return html page instead
         return res.render('error', {status: 400, message: 'No ballot found!'})
     }
 
@@ -18,10 +17,10 @@ router.get('/:ballotName', async function(req, res, next) {
 
     const tokenStatus = checkVotingToken(ballot, votingToken)
     if (tokenStatus.notFound) {
-        return res.render('error', { status: 401, message: 'Invalid token!'});
+        return res.render('error', {status: 401, message: 'Invalid token!'});
     }
     if (tokenStatus.isExpired) {
-        return res.render('error', { status: 401, message: "Token expired, you have already voted!"});
+        return res.render('error', {status: 401, message: "Token expired, you have already voted!"});
     }
     const candidatesPerRole = getCandidatesPerRole(ballot)
     return res.render('vote', {token: votingToken, roles: utils.roles, candidatesPerRole: candidatesPerRole})
@@ -35,7 +34,7 @@ router.post('/:ballotName', async function(req, res, next) {
 
     const ballot = await db.findBallotByName(ballotName)
     if (!ballot) {
-        return res.render('error', { status: 404, message: "Ballot not found"});
+        return res.render('error', {status: 404, message: "Ballot not found"});
     }
 
     // TODO: /!\ check start/end date for ballot
@@ -43,14 +42,14 @@ router.post('/:ballotName', async function(req, res, next) {
 
     const tokenStatus = checkVotingToken(ballot, votingToken)
     if (tokenStatus.notFound) {
-        return res.render('error', { status: 401, message: 'Token not found'});
+        return res.render('error', {status: 401, message: 'Token not found'});
     }
     if (tokenStatus.isExpired) {
-        return res.render('error', { status: 401, message: "Token expired"});
+        return res.render('error', {status: 401, message: "Token expired"});
     }
 
     if (!isValidVote(ballot, vote)) {
-        return res.render('error', { status: 400, message: 'Invalid vote'});
+        return res.render('error', {status: 400, message: 'Invalid vote'});
     }
 
     registerVote(ballot, vote)
