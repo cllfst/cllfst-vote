@@ -9,8 +9,7 @@ git clone https://github.com/cllfst/cllfst-vote.git
 ## Run in dev mode
 ### install mongodb
 ```
-# install mongodb
-$ sudo apt update && sudo apt install -y mongodb
+sudo apt update && sudo apt install -y mongodb
 ```
 
 ### Install packages & start the app
@@ -30,9 +29,9 @@ SENDER_EMAIL=<sender email address> SENDER_PASSWORD=<sender email password> npm 
 # Using docker
 cd inside the projects folder and add a .env file with your config:
 ```
-cd cllfst-vote/
-touch .env
-cat .env
+$ cd cllfst-vote/
+$ touch .env
+$ cat .env
 
 ADMIN_PASSWORD=<whatever>
 SENDER_EMAIL=<sender email>
