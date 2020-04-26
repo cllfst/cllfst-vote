@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', require('./routes/index'))
 app.use('/ballots', require('./routes/ballot'))
 app.use('/votes', require('./routes/vote'))
+app.use('/results', require('./routes/result'))
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

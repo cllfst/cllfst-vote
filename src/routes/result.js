@@ -6,22 +6,21 @@ const utils = require('../util/utils')
 /* GET Result page. */
 router.get('/:ballotName',async function(req, res, next) {
     const ballotName = req.params.ballotName
-    console.log(ballotName)
     const ballot = await db.findBallotByName(ballotName)
-    console.log(ballot)
-    if(ballot.endDate > new Date()){
-        return res.render('error',{status:400,message:'Please revisit us after the end of the vote on '+ballot.endDate})
-    }
+
     if(!ballot){
-         // return html page instead
-         return res.render('error', {status: 400, message: 'No ballot found!'})
+         return res.render('error', {error: {status: 400, message: 'No ballot found!'}})
     }
 
-    const candidatesPerRolePerVote = getCondidatesPerRolePerVote(ballot)
+    if(ballot.endDate > new Date()){
+        return res.render('error',{error: {status:400,message:'Please revisit us after the end of the vote on '+ballot.endDate}})
+    }
+
+    const candidatesPerRolePerVote = getCandidatesPerRolePerVote(ballot)
    
     res.render('result',{roles: utils.roles, candidatesPerRolePerVote: candidatesPerRolePerVote})
 });
-function getCondidatesPerRolePerVote(ballot){
+function getCandidatesPerRolePerVote(ballot){
     const candidatesPerRolePerVote = {}
     for (const role of utils.roles){
         candidatesPerRolePerVote[role]=[]
