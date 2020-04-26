@@ -1,0 +1,18 @@
+img {
+    float: top;
+    width: 100%;
+}
+  h1 {
+    position: absolute;
+    top: 8px;
+    color: aliceblue;
+    font-size: 80px;
+
+  }
+
+  h2 {
+    position: absolute;
+    top: 30%;
+    color: aliceblue;
+  }
+  
