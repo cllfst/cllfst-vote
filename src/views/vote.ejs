@@ -33,7 +33,7 @@
               <h5> <%= role %> </h5>
               <div>
                 <select name="<%= role %>" class="custom-select">
-                  <option value={null} disabled selected>Please select a <%= role %></option>
+                  <option value=null selected> Please select a <%= role %> </option>
                   <% for (const name of candidatesPerRole[role]) { %>
                     <option value="<%= name %>"> <%= name %> </option>
                   <% } %>
