@@ -7,10 +7,13 @@ const utils = require('../util/utils')
 const appEnv = require('../util/app-env')
 const db = require('../models/db')
 
+// TODO: return a form to create ballots
+router.get('/', function(req, res, next) {res.send('<h1> WIP... </h1>')})
+
 router.post('/', async function(req, res, next) {
     const authorization = req.headers.authorization
     if (!utils.isAdmin(authorization)) {
-        return res.render('error', { status: 401, message: 'Unauthorized' });
+        return res.render('error', {status: 401, message: 'Unauthorized'});
     }
 
     if (!isValidBallotDesc(req.body)) {
@@ -22,7 +25,7 @@ router.post('/', async function(req, res, next) {
     }
 
     if (!isValidCandidateList(req.body.candidates)) {
-        return res.render('error', { status: 400, message: 'Invalid candidate list' });
+        return res.render('error', {status: 400, message: 'Invalid candidate list'});
     }
 
     const response = await init(req.body)
