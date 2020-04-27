@@ -2,9 +2,7 @@
 
 const express = require('express')
 const router = express.Router()
-const momentTimezone = require('moment-timezone')
 const moment = require('moment')
-
 const utils = require('../util/utils')
 const appEnv = require('../util/app-env')
 const db = require('../models/db')
@@ -30,14 +28,12 @@ router.post('/', async function(req, res, next) {
         return res.render('error', {status: 400, message: 'Invalid candidate list'});
     }
 
-    const response = await init(req.body)
+    const response = await createBallot(req.body)
     return res.status(200).json({"result": response})
 })
 
-async function init(ballot) {
-    console.log('\n#######################')
-    console.log('# Initializing ballot #')
-    console.log('#######################\n')
+async function createBallot(ballot) {
+    console.log('=> Creating ballot')
 
     ////////////////////
     // TODO: remove this /!\
@@ -49,7 +45,7 @@ async function init(ballot) {
 
     initVotesForCandidates(ballot.candidates)
     const newBallot = await db.newBallot(ballot)
-    console.log(`Created ballot [name:${newBallot.ballotName}]`)
+    console.log(`=> Created ballot [name:${newBallot.ballotName}]`)
 
     const senderEmail = appEnv.senderEmail
     const senderPassword = appEnv.senderPassword
@@ -68,19 +64,10 @@ function isValidBallotDesc(ballot) {
         && ballot.subject && ballot.text
         && Array.isArray(ballot.emails) && Array.isArray(ballot.candidates)
 
-    ballot.startDate = new Date(ballot.startDate)
-    ballot.endDate = new Date(ballot.endDate)
-
-    console.log('received: ' + ballot.startDate.toISOString())
-    console.log('received moment: ' + moment(ballot.startDate).format())
-    console.log('received moment utc: ' + moment(ballot.startDate).utc().format())
-    console.log('now iso: ' + new Date().toISOString())
-    console.log('moment now: ' + moment().format())
-    console.log('moment now utc: ' + moment().utc().format())
-
-    const validDates = ballot.startDate.getTime() < ballot.endDate.getTime()
-        && Date.now() < ballot.endDate.getTime()
-    return notNull && validDates
+    ballot.startDate = moment(ballot.startDate).utc()
+    ballot.endDate = moment(ballot.endDate).utc()
+    const now = moment().utc()
+    return notNull && now.isBefore(ballot.startDate) && ballot.startDate.isBefore(ballot.endDate)
 }
 
 function isValidCandidateList(candidates) {

@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer')
 const randomstring = require('randomstring')
 const appEnv = require('./app-env')
 
-const roles = ['SG', 'IN', 'EX', 'MA', 'SP', 'ME', 'CM']
+const roles = ['Secrétaire', 'Interne', 'Externe', 'Materiel', 'Sponsoring', 'Médiatisation', 'Communauté']
 
 module.exports = {
     roles: roles,
@@ -36,10 +36,10 @@ module.exports = {
             text: body
         }
         
-        console.log(`Sending email [to:${to}]`)
+        console.log(`=> Sending email [to:${to}]`)
         transporter.sendMail(mailOptions, function(err, info) {
             if (err) {
-                console.log(`Error sending email [to:${to}, error:${err.message}]`)
+                console.error(`=> Error sending email [to:${to}, error:${err.message}]`)
             }
         })
     },
