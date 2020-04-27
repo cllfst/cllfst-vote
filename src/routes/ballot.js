@@ -2,7 +2,9 @@
 
 const express = require('express')
 const router = express.Router()
-var Url = require('url-parse')
+const momentTimezone = require('moment-timezone')
+const moment = require('moment')
+
 const utils = require('../util/utils')
 const appEnv = require('../util/app-env')
 const db = require('../models/db')
@@ -56,7 +58,7 @@ async function init(ballot) {
         const votingUrl = createVotingLink(ballot.ballotName, votingToken)
         const body = ballot.text.replace('{}', votingUrl)
         db.addTokenToBallot(ballot.ballotName, votingToken)
-        utils.sendEmail(senderEmail, senderPassword, to, ballot.subject, body)    
+        // utils.sendEmail(senderEmail, senderPassword, to, ballot.subject, body)    
     }
     return 'ok'
 }
@@ -68,8 +70,16 @@ function isValidBallotDesc(ballot) {
 
     ballot.startDate = new Date(ballot.startDate)
     ballot.endDate = new Date(ballot.endDate)
-    const validDates = Date.now() < ballot.startDate.getTime()
-        && ballot.startDate.getTime() < ballot.endDate.getTime()    
+
+    console.log('received: ' + ballot.startDate.toISOString())
+    console.log('received moment: ' + moment(ballot.startDate).format())
+    console.log('received moment utc: ' + moment(ballot.startDate).utc().format())
+    console.log('now iso: ' + new Date().toISOString())
+    console.log('moment now: ' + moment().format())
+    console.log('moment now utc: ' + moment().utc().format())
+
+    const validDates = ballot.startDate.getTime() < ballot.endDate.getTime()
+        && Date.now() < ballot.endDate.getTime()
     return notNull && validDates
 }
 
