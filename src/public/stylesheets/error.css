@@ -1,18 +1,30 @@
-img {
-    float: top;
-    width: 100%;
+.container {
+  text-align: center;
+
 }
-  h1 {
-    position: absolute;
-    top: 8px;
-    color: aliceblue;
-    font-size: 80px;
 
-  }
+table th {
+  width: 200%;
+ 
+}
 
-  h2 {
-    position: absolute;
-    top: 30%;
-    color: aliceblue;
-  }
-  
+table td {
+  text-align: left;
+  margin-right: 40%;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 10%;
+  margin-bottom: -3%;
+
+}
+
+h1 {
+  text-align: center;
+  color: blue;
+  font-family: cursive;
+
+}
