@@ -47,13 +47,13 @@ function connect() {
         useUnifiedTopology: true
     })
     mongoose.connection.once('open', _ => {
-        console.log('Connected to db')
+        console.log('=> Connected to db')
     })
     mongoose.connection.on('error', err => {
-        console.error('Db connection error:', err)
+        console.error('=> Db connection error:', err)
     })
     mongoose.connection.on('close', _ => {
-        console.log('Closed db connection')
+        console.error('=> Closed db connection')
     })
     return mongoose.connection
 }
