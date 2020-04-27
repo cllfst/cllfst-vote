@@ -1,5 +1,4 @@
-
-
+'use strict'
 
 module.exports = {
     adminPassword: process.env.ADMIN_PASSWORD ? process.env.ADMIN_PASSWORD : 'whatever',
