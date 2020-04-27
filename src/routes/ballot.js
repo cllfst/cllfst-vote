@@ -7,8 +7,10 @@ const utils = require('../util/utils')
 const appEnv = require('../util/app-env')
 const db = require('../models/db')
 
-// TODO: return a form to create ballots
-router.get('/', function(req, res, next) {res.send('<h1> WIP... </h1>')})
+router.get('/', function(req, res, next) {
+    // TODO: return a form to create ballots
+    return res.send('<h1> WIP... </h1>')
+})
 
 router.post('/', async function(req, res, next) {
     const authorization = req.headers.authorization

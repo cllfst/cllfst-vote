@@ -4,7 +4,8 @@ const nodemailer = require('nodemailer')
 const randomstring = require('randomstring')
 const appEnv = require('./app-env')
 
-const roles = ['Secrétaire', 'Interne', 'Externe', 'Materiel', 'Sponsoring', 'Médiatisation', 'Communauté']
+const roles = ['Secrétaire', 'Interne', 'Externe', 'Materiel', 'Sponsoring',
+    'Médiatisation', 'Communauté']
 
 module.exports = {
     roles: roles,
