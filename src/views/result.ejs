@@ -28,7 +28,9 @@
     <div class="container">
         <div class="main">
 
-            <% for (const role of roles) { %>
+            <% var vote =0
+                var result =0
+             for (const role of roles) { %>
 
             <table class="table">
                 <thead class="thead-light">
@@ -36,12 +38,18 @@
                         <th><%= role %> </th>
                     </tr>
                 </thead>
-                <%for (const candidate of candidatesPerRolePerVote[role]) { %>
+                <%  while (vote <= 100 )
+                    await sleep(2000)
+                for (const candidate of candidatesPerRolePerVote[role]) { 
+                    if (vote >= candidate.vote) {result = candidate.vote }
+                    else result = vote
+                    vote +=1
+                   %>
                 <tbody>
                     <tr>
                         <td> <%= candidate.nom %> </td>
 
-                        <td> <%=candidate.vote %> </td>
+                        <td> <%=result %> </td>
                     </tr>
                 </tbody>
                 <% } %>
