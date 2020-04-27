@@ -13,7 +13,7 @@ router.get('/:ballotName',async function(req, res, next) {
     }
 
     if(ballot.endDate > new Date()){
-        return res.render('error',{error: {status:400,message:'Please revisit us after the end of the vote on '+ballot.endDate}})
+        return res.render('error',{error: {status:400,message:'Please revisit us after the end of the vote on '+ballot.endDate.getTimeZoneOffset();}})
     }
 
     const candidatesPerRolePerVote = getCandidatesPerRolePerVote(ballot)
