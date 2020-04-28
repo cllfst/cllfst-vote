@@ -13,7 +13,7 @@ router.get('/:ballotName', async function (req, res, next) {
     const ballot = await db.findBallotByName(ballotName)
     const check = runCheck(ballot, votingToken)
     if (check.isError) {
-        return res.render('error', check.details)
+        return res.render('error', check)
     }
     const candidatesPerRole = getCandidatesPerRole(ballot)
     return res.render('vote', { token: votingToken, roles: utils.roles,
@@ -29,10 +29,10 @@ router.post('/:ballotName', async function (req, res, next) {
     const ballot = await db.findBallotByName(ballotName)
     const check = runCheck(ballot, votingToken)
     if (check.isError) {
-        return res.render('error', check.details)
+        return res.render('error', check)
     }
     if (!isValidVote(ballot, vote)) {
-        return res.render('error', utils.viewData(400, 'Invalid vote'))
+        return res.render('error', utils.failedCheck(400, 'Invalid vote'))
     }
 
     registerVote(ballot, vote)
@@ -43,7 +43,7 @@ router.post('/:ballotName', async function (req, res, next) {
 
 function runCheck(ballot, votingToken) {
     if (!ballot) {
-        return utils.error(404, 'Ballot not found!')
+        return utils.failedCheck(404, 'Ballot not found!')
     }
 
     // check dates
@@ -51,20 +51,20 @@ function runCheck(ballot, votingToken) {
     const endDate = moment(ballot.endDate).utc()
     const now = moment().utc()
     if (now.isBefore(startDate)) {
-        return utils.error(401,'Ballot is not open yet!')
+        return utils.failedCheck(401,'Ballot is not open yet!')
     }
     if (now.isAfter(endDate)) {
-        return utils.error(401, 'Ballot is closed!')
+        return utils.failedCheck(401, 'Ballot is closed!')
     }
 
     // check authorization token
     const isValid = ballot.tokens.includes(votingToken)
     const isExpired = ballot.expiredTokens.includes(votingToken)
     if (!isValid && !isExpired) {
-        return utils.error(401, 'Invalid token!')
+        return utils.failedCheck(401, 'Invalid token!')
     }
     if (isExpired) {
-        return utils.error(401, "Token expired!")
+        return utils.failedCheck(401, "Token expired!")
     }
 
     return {isError: false}

@@ -11,7 +11,7 @@ router.get('/:ballotName',async function(req, res, next) {
     const ballot = await db.findBallotByName(ballotName)
     const check = runCheck(ballot)
     if (check.isError) {
-        return res.render('error', check.details)
+        return res.render('error', check)
     }
 
     const candidatesPerRolePerVote = getCandidatesPerRolePerVote(ballot)   
@@ -20,7 +20,7 @@ router.get('/:ballotName',async function(req, res, next) {
 
 function runCheck(ballot) {
     if (!ballot) {
-        return utils.error(404, 'Ballot not found!')
+        return utils.failedCheck(404, 'Ballot not found!')
     }
 
     // check dates
@@ -28,11 +28,11 @@ function runCheck(ballot) {
     const endDate = moment(ballot.endDate).utc()
     const now = moment().utc()
     if (now.isBefore(startDate)) {
-        return utils.error(401,'Ballot is not open yet! Please revisit'
+        return utils.failedCheck(401,'Ballot is not open yet! Please revisit'
             + ' us after the end of the vote on ' + ballot.endDate)
     }
     if (now.isBefore(endDate)) {
-        return utils.error(401,'Ballot is still active! Please revisit'
+        return utils.failedCheck(401,'Ballot is still active! Please revisit'
             + ' us after the end of the vote on ' + ballot.endDate)
     }
     return {isError: false}

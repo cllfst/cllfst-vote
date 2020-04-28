@@ -49,12 +49,13 @@ module.exports = {
         return roles.includes(role)
     },
 
-    error: (status, message) => {
-        return {isError: true, details: viewData(status, message)}
+    failedCheck: (status, message) => {
+        return {
+            isError: true,
+            error: {
+                status: status,
+                message: message
+            }
+        }
     },
-
-    viewData: (status, message) => {
-        return {status: status, message: message}
-    }
-    
 }
