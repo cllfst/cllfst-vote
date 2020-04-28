@@ -1,0 +1,43 @@
+version: '3.4'
+
+
+services:
+  app:
+    image: zguesmi/cllfst-vote:0.0.1
+    build: .
+    container_name: app
+    environment:
+      - NODE_ENV=production
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - SENDER_EMAIL=${SENDER_EMAIL}
+      - SENDER_PASSWORD=${SENDER_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DOMAIN_NAME=${DOMAIN_NAME}
+    ports:
+      - 80:3000
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:4-xenial
+    container_name: mongo
+    # ports:
+    #   - 27017:27017
+    volumes:
+      - db-data:/data/db
+
+  mongo_ui:
+    image: mongo-express:0.49
+    container_name: mongo_ui
+    environment:
+    - ME_CONFIG_BASICAUTH_USERNAME=${DB_UI_USERNAME}
+    - ME_CONFIG_BASICAUTH_PASSWORD=${DB_UI_PASSWORD}
+    ports:
+    - 8081:8081
+    depends_on:
+      - mongo
+
+volumes:
+  db-data:

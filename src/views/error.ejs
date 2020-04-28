@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> <%= error.status %> </title>
+    <link rel='stylesheet' href='../public/stylesheets/error.css' />
+  </head>
+
+  <body>
+    <div>
+      <img src="../public/images/404-PageNotFound3.gif" alt="Error"> <br>
+        <h1 class="text"> <%= error.message %> </h1>
+        <pre><%= error.stack %></pre>
+    </div>
+  </body>
+</html>
