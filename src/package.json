@@ -3,12 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+<<<<<<< HEAD
 <<<<<<< HEAD:package.json
     "start": "nodemon ./bin/www"
 =======
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www"
 >>>>>>> front:src/package.json
+=======
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www"
+>>>>>>> 10dc5f6db7fe29abadeb36d6cff517242b5d573b
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

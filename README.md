@@ -17,6 +17,7 @@ sudo apt update && sudo apt install -y mongodb
 cd cllfst-vote/src && npm i && npm run dev
 ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 install mongodb
 # sudo systemctl start mongod
 # mongo
@@ -28,6 +29,8 @@ install mongodb
 git clone https://github.com/cllfst/cllfst_vote.git
 =======
 >>>>>>> front
+=======
+>>>>>>> 10dc5f6db7fe29abadeb36d6cff517242b5d573b
 
 ### Send emails
 If you want the app to send emails, you should provide correct

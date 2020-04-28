@@ -8,7 +8,13 @@
   <body>
     <div>
       <img src="../public/images/404-PageNotFound3.gif" alt="Error"> <br>
-        <h1 class="text"> <%= error.message %> </h1>
+        <% if ( error.message === 'Please revisit us after the end of the vote on ')
+          { 
+            var timezone = new Date(error.date);  
+            message = error.message + timezone;
+          }
+        %>
+        <h1 class="text"> <%= message %> </h1>
         <pre><%= error.stack %></pre>
     </div>
   </body>
