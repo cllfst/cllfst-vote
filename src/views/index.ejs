@@ -12,14 +12,48 @@
 </head>
 
 <body>
+
   <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
-    <div class="w3-display-topleft w3-padding-large w3-xlarge">Cllfst</div>
-    
+
+    <!-- logo -->
+    <div>
+      <img class="w3-display-topleft w3-image w3-padding-large w3-margin logo" src="/images/logo.png" alt="Logo">
+    </div>
+
+    <!-- message -->
     <div class="w3-display-middle">
       <h1 class="w3-jumbo w3-animate-top"> Please check you email inbox!</h1>
       <hr class="w3-border-grey" style="margin:auto;width:40%">
       <p class="w3-large w3-center">You need an access link to be able to vote.</p>
     </div>
+
+    <!-- open ballots -->
+    <div class="w3-display-bottommiddle w3-padding-large">
+      <h1>Currently open ballots</h1>
+      
+      <ul class="w3-ul w3-card-4">
+        <% if (openBallots.length === 0) { %> 
+          <li class="w3-bar w3-white w3-margin">
+            <div class="w3-bar-item">
+              <h4 class="w3-large"> Nothing for now </h4>
+            </div>
+          </li>
+        <% } %> 
+        <% for (const item of openBallots) { %>
+          <li class="w3-bar w3-white w3-margin">
+            <div class="w3-bar-item">
+              <h4 class="w3-large">
+                <a href="/results/<%= item.ballotName %>"> <%= item.ballotName %> </a>
+              </h4>
+              <p>Start: <%= item.startDate %> </p>
+              <p>End: <%= item.endDate %> </p>
+            </div>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+
+  </div>
 
 </body>
 

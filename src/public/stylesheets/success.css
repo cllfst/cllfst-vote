@@ -27,7 +27,7 @@
       font-family: 'Kaushan Script', cursive;
     font-size:4em;
     letter-spacing:3px;
-    color:#5892FF ;
+    color:#2f55d0 ;
     margin:0;
     margin-bottom:20px;
   }
@@ -40,7 +40,7 @@
   }
   .go-home{
     color:#fff;
-    background:#5892FF;
+    background:#2f55d0;
     border:none;
     padding:10px 50px;
     margin:30px 0;
@@ -57,13 +57,13 @@
   .footer-like p{
     margin:0;
     padding:4px;
-    color:#5892FF;
+    color:#2f55d0;
     font-family: 'Source Sans Pro', sans-serif;
     letter-spacing:1px;
   }
   .footer-like p a{
     text-decoration:none;
-    color:#5892FF;
+    color:#2f55d0;
     font-weight:600;
   }
   

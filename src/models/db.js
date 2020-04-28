@@ -1,6 +1,7 @@
 'user strict'
 
 const mongoose = require('mongoose')
+const moment = require('moment')
 const Ballot = require('./ballot')
 const appEnv = require('../util/app-env')
 
@@ -37,6 +38,12 @@ module.exports = {
             useFindAndModify: false,
             new: true
         })
+    },
+
+    getOpenBallots: async () => {
+        const now = moment().utc()
+        // TODO: get only n elements
+        return Ballot.find({startDate: {$lte: now}, endDate: {$gte: now}})
     }
 
 }
