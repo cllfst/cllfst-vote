@@ -32,11 +32,11 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
-    const devError = req.app.get('env') === 'development' ? err : {}
+    const isDevMode = req.app.get('env') === 'development'
     const error = {
-        message: err.message,
+        message: isDevMode ? err.message : 'Oops something went wrong!',
         status: err.status || 500,
-        stack: devError.stack
+        stack: isDevMode ? err.stack : ''
     }
     
     // render the error page
