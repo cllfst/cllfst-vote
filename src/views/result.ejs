@@ -38,21 +38,17 @@
                         <th><%= role %> </th>
                     </tr>
                 </thead>
-                <%  while (vote <= 100 )
-                    await sleep(2000)
-                for (const candidate of candidatesPerRolePerVote[role]) { 
-                    if (vote >= candidate.vote) {result = candidate.vote }
-                    else result = vote
-                    vote +=1
+                <%  for (const candidate of candidatesPerRolePerVote[role]) { 
+                         await sleep(4000);
                    %>
                 <tbody>
                     <tr>
                         <td> <%= candidate.nom %> </td>
 
-                        <td> <%=result %> </td>
+                        <td> <%=candidate.vote %> </td>
                     </tr>
                 </tbody>
-                <% } %>
+                <% }} %>
                 <br><br><br>
                 <% } %>
 
@@ -69,6 +65,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-</body>
 
+    </body>
+<script>
+
+
+</script>
 </html>
