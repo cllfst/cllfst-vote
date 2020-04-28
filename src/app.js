@@ -1,8 +1,10 @@
-var createError = require('http-errors')
-var express = require('express')
-var path = require('path')
-var cookieParser = require('cookie-parser')
-var logger = require('morgan')
+'use strict'
+
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
 var app = express()
 
@@ -30,11 +32,11 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
-    const devError = req.app.get('env') === 'development' ? err : {}
+    const isDevMode = req.app.get('env') === 'development'
     const error = {
-        message: err.message,
+        message: isDevMode ? err.message : 'Oops something went wrong!',
         status: err.status || 500,
-        stack: devError.stack
+        stack: isDevMode ? err.stack : ''
     }
     
     // render the error page
