@@ -48,4 +48,13 @@ module.exports = {
     isValidRole: (role) => {
         return roles.includes(role)
     },
+
+    error: (status, message) => {
+        return {isError: true, details: viewData(status, message)}
+    },
+
+    viewData: (status, message) => {
+        return {status: status, message: message}
+    }
+    
 }

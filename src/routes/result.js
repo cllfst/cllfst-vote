@@ -1,26 +1,43 @@
-var express = require('express');
-var router = express.Router();
-const db = require('../models/db');
+'use strict'
+
+const express = require('express')
+const router = express.Router()
+const moment = require('moment')
+const db = require('../models/db')
 const utils = require('../util/utils')
 
-/* GET Result page. */
 router.get('/:ballotName',async function(req, res, next) {
     const ballotName = req.params.ballotName
     const ballot = await db.findBallotByName(ballotName)
-
-    if(!ballot){
-         return res.render('error', {error: {status: 400, message: 'No ballot found!'}})
+    const check = runCheck(ballot)
+    if (check.isError) {
+        return res.render('error', check.details)
     }
 
-    if(ballot.endDate > new Date()){
-        return res.render('error',{error: {status:400, 
-            message:'Please revisit us after the end of the vote on ' + ballot.endDate.getTimeZoneOffset()}})
+    const candidatesPerRolePerVote = getCandidatesPerRolePerVote(ballot)   
+    return res.render('result', {roles: utils.roles, candidatesPerRolePerVote: candidatesPerRolePerVote})
+})
+
+function runCheck(ballot) {
+    if (!ballot) {
+        return utils.error(404, 'Ballot not found!')
     }
 
-    const candidatesPerRolePerVote = getCandidatesPerRolePerVote(ballot)
-   
-    res.render('result',{roles: utils.roles, candidatesPerRolePerVote: candidatesPerRolePerVote})
-});
+    // check dates
+    const startDate = moment(ballot.startDate).utc()
+    const endDate = moment(ballot.endDate).utc()
+    const now = moment().utc()
+    if (now.isBefore(startDate)) {
+        return utils.error(401,'Ballot is not open yet! Please revisit'
+            + ' us after the end of the vote on ' + ballot.endDate)
+    }
+    if (now.isBefore(endDate)) {
+        return utils.error(401,'Ballot is still active! Please revisit'
+            + ' us after the end of the vote on ' + ballot.endDate)
+    }
+    return {isError: false}
+}
+
 function getCandidatesPerRolePerVote(ballot){
     const candidatesPerRolePerVote = {}
     for (const role of utils.roles){
@@ -29,7 +46,7 @@ function getCandidatesPerRolePerVote(ballot){
     for (const candidate of ballot.candidates){
         candidatesPerRolePerVote[candidate.role].push(new Object({nom:candidate.name,vote:candidate.votes}))
     }
-    return candidatesPerRolePerVote;
+    return candidatesPerRolePerVote
 }
 
-module.exports = router;
+module.exports = router
