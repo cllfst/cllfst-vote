@@ -40,7 +40,8 @@
                 </thead>
                 <%  while (vote <= 100 )
                     await sleep(2000)
-                for (const candidate of candidatesPerRolePerVote[role]) { 
+                for (const candidate of candidatesPerRolePerVote[role]) {
+                    await sleep(1000) 
                     if (vote >= candidate.vote) {result = candidate.vote }
                     else result = vote
                     vote +=1
