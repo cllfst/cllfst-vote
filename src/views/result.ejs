@@ -39,7 +39,7 @@
                     </tr>
                 </thead>
                 <%  while (vote <= 100 )
-                    await sleep(2000)
+                    <!-- await sleep(2000) -->
                 for (const candidate of candidatesPerRolePerVote[role]) { 
                     if (vote >= candidate.vote) {result = candidate.vote }
                     else result = vote
