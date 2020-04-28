@@ -6,7 +6,7 @@ const moment = require('moment')
 const utils = require('../util/utils')
 const db = require('../models/db')
 
-router.get('/:ballotName', async function(req, res, next) {
+router.get('/:ballotName', async function (req, res, next) {
 
     const ballotName = req.params.ballotName
     const votingToken = req.query.token
@@ -16,10 +16,10 @@ router.get('/:ballotName', async function(req, res, next) {
         return res.render('error', check.details)
     }
     const candidatesPerRole = getCandidatesPerRole(ballot)
-    return res.render('vote', {token: votingToken, roles: utils.roles, candidatesPerRole: candidatesPerRole})
+    return res.render('vote', { token: votingToken, roles: utils.roles, candidatesPerRole: candidatesPerRole })
 })
 
-router.post('/:ballotName', async function(req, res, next) {
+router.post('/:ballotName', async function (req, res, next) {
 
     const ballotName = req.params.ballotName
     const votingToken = req.query.token
@@ -37,7 +37,7 @@ router.post('/:ballotName', async function(req, res, next) {
     registerVote(ballot, vote)
     expireToken(ballot, votingToken)
     await db.updateBallot(ballot)
-    res.render('success', {status: 200, message: 'Bravo!'})
+    res.render('success', { status: 200, message: 'Bravo!' })
 });
 
 function runCheck(ballot, votingToken) {
@@ -95,9 +95,11 @@ function isValidVote(ballot, vote) {
     }
 
     for (let role of Object.keys(vote)) {
-        const test = e => e.role === role && e.name === vote[role]
-        if (!ballot.candidates.some(test)) {
-            return false
+        if (vote[role] != 'null') {
+            const test = e => e.role == role && e.name == vote[role]
+            if (!ballot.candidates.some(test)) {
+                return false
+            }
         }
     }
     return true
@@ -105,12 +107,15 @@ function isValidVote(ballot, vote) {
 
 function registerVote(ballot, vote) {
     for (let role of Object.keys(vote)) {
-        const test = e => e.role === role && e.name === vote[role]
-        const foundCandidate = ballot.candidates.find(test)
-        if (!foundCandidate) {
-            console.error(`=> Cannot vote for ${vote[role]} as ${role}`);
+        if (vote[role] != 'null') {
+            const test = e => e.role === role && e.name === vote[role]
+            const foundCandidate = ballot.candidates.find(test)
+            if (!foundCandidate) {
+                console.error(`Cannot vote for ${vote[role]} as ${role}`);
+            } else {
+                foundCandidate.votes += 1
+            }
         }
-        foundCandidate.votes += 1
     }
 }
 

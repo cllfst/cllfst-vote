@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title> Error </title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <title> <%= error.status %> </title>
+    <link rel='stylesheet' href='/stylesheets/error.css' />
   </head>
 
   <body>
-    <h1>Error page</h1>
     <div>
-        <h2><%= message %></h2>
-        <h2><%= status %></h2>
+      <img src="/images/404-PageNotFound3.gif" alt="Error"> <br>
+        <h1 class="text"> <%= error.message %> </h1>
+        <pre><%= error.stack %></pre>
     </div>
-
-    <!-- start here -->
-
   </body>
 </html>
