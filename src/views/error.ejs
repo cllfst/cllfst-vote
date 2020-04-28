@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title> <%= error.status %> </title>
-    <link rel='stylesheet' href='../public/stylesheets/error.css' />
-  </head>
 
-  <body>
-    <div>
-      <img src="../public/images/404-PageNotFound3.gif" alt="Error"> <br>
-        <h1 class="text"> <%= error.message %> </h1>
-        <pre><%= error.stack %></pre>
-    </div>
-  </body>
+<head>
+  <title> <%= error.status %> </title>
+  <link rel='stylesheet' href='../public/stylesheets/error.css' />
+</head>
+
+<body>
+  <div>
+    <img src="../public/images/404-PageNotFound3.gif" alt="Error"> <br>
+    <% if ( error.message === 'Please revisit us after the end of the vote on ')
+      { 
+        var timezone = new Date(error.date);  
+        message = error.message + timezone;
+      }
+    %>
+    <h1 class="text"> <%= message %> </h1>
+
+
+    <pre><%= error.stack %></pre>
+  </div>
+</body>
+
 </html>
