@@ -44,7 +44,7 @@ module.exports = {
         const now = moment().utc()
         console.log(now)
         // TODO: get only n elements
-        return Ballot.find({startDate: {$lte: "2020-05-25T22:19:37.143Z"}, endDate: {$gte: "2020-06-25T22:19:37.143Z"}})
+        return Ballot.find({startDate: {$lte: now}, endDate: {$gte: now}})
     }
 
 }

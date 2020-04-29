@@ -2,9 +2,20 @@
     text-align: center;
   
   }
+  body,html {
+    height: 100%;
   
+}
+  .bgimg {
+  background-image: url(../images/CLL.png);
+
+  background-position: center;
+  background-size: cover;
+  padding: 0 !important;
+  margin: 0 auto !important;
+}
   table th {
-    width: 200%;
+    width: 200%;  
    
   }
   
@@ -24,7 +35,8 @@ img {
   h1 {
       text-align: center;
       color: blue;
-      text-emphasis: 
+    
+      
   }
 
   .container {

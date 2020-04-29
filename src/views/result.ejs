@@ -15,47 +15,51 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" type="text/css" href="../public/stylesheets/result.css">
 
 
 </head>
 
-<body>
-    <h1 style="float: center;"><b>Final results!</b></h1>
-    <img src="https://media.tenor.com/images/8788623357d447d55b9a20f69b45f44b/tenor.gif" alt="happy penguin"> <br>
+<body >
+    <div class="bgimg">
 
-    <br>
-    <div class="container">
-        <div class="main">
-
-            <% var vote =0
-                var result =0
-             for (const role of roles) { %>
-
-            <table class="table">
-                <thead class="thead-light">
-                    <tr>
-                        <th><%= role %> </th>
-                    </tr>
-                </thead>
-                <%  while (vote <= 100 )
-                    <!-- await sleep(2000) -->
-                for (const candidate of candidatesPerRolePerVote[role]) { 
-                    if (vote >= candidate.vote) {result = candidate.vote }
-                    else result = vote
-                    vote +=1
-                   %>
-                <tbody>
-                    <tr>
-                        <td> <%= candidate.nom %> </td>
-
-                        <td> <%=result %> </td>
-                    </tr>
-                </tbody>
-                <% } %>
-                <br><br><br>
-                <% } %>
-
+        <h1 style="float: center; margin: 0px;" ><b style="color: white;">Final results!</b></h1>
+        <div>
+            <img class="w3-display-topleft w3-image w3-padding-large w3-margin logo" src="/images/logo.png" alt="Logo">
+          </div>
+        <img src="https://media.tenor.com/images/8788623357d447d55b9a20f69b45f44b/tenor.gif" alt="happy penguin"> 
+        <br>
+        <div  class="container" style="background-color: white; width:50%;">
+            <div class="main">
+    
+                <table class="table" style="margin: 0px;">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Role</th>
+                            <th>Nombre du vote</th>
+                        </tr>
+                    </thead>
+                   
+                    
+                    <tbody>
+                        <% for (const role of roles) { %>
+                       
+                            <tr style="background-color: gray;">
+                                <td><%= role%></td>
+                            </tr>
+                            <% for (const candidate of candidatesPerRolePerVote[role]) { %>
+                        <tr>
+                            <td> <%= candidate.nom %> </td>
+    
+                            <td> <%= candidate.vote %> </td>
+                        </tr>
+                        <% } %>
+                        <% } %>
+                    </tbody>
+                    
+    
+            </div>
         </div>
     </div>
 
@@ -69,6 +73,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+        
 </body>
+
 
 </html>
