@@ -31,7 +31,7 @@
 <body>
   <div class="container-contact100">
     <div class="wrap-contact100">
-      <form class="contact100-form validate-form" method="POST">
+      <form class="contact100-form validate-form" method="POST" id="myForm">
         <span class="contact100-form-title"> Vote Here! </span>
 
         <% for (const role of roles) { %>
@@ -58,6 +58,26 @@
           </div>
         </div>
       </form>
+      <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" style="text-align: center;">Are you sure?</h4>
+              <button style="float: left;" type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                  aria-hidden="true">&times;</span></button>
+
+            </div>
+            <div class="modal-body">
+              <h5>You are about to submit your answers </h5>
+              <p>Once you confirm, you can't go back and change them &hellip;</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">stay on page</button>
+              <button type="button" class="btn btn-primary">confirm</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -73,6 +93,21 @@
   <script src="/fonts/vendor/countdowntime/countdowntime.js"></script>
   <!--===============================================================================================-->
   <script src="/fonts/votejs/main.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <script>
+    $('#myForm').on('submit', function (e) {
+      $('#myModal').modal('show');
+      e.preventDefault();
+    });
+  </script>
 
 </body>
 
