@@ -1,6 +1,7 @@
 'use strict'
 
 module.exports = {
+    nodeEnv: process.env.NODE_ENV,
     adminPassword: process.env.ADMIN_PASSWORD ? process.env.ADMIN_PASSWORD : 'whatever',
     senderEmail: process.env.SENDER_EMAIL ? process.env.SENDER_EMAIL : 'whatever',
     senderPassword: process.env.SENDER_PASSWORD ? process.env.SENDER_PASSWORD : 'whatever',

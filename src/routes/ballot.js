@@ -56,7 +56,9 @@ async function createBallot(ballot) {
         const votingUrl = createVotingLink(ballot.ballotName, votingToken)
         const body = ballot.text.replace('{}', votingUrl)
         db.addTokenToBallot(ballot.ballotName, votingToken)
-        // utils.sendEmail(senderEmail, senderPassword, to, ballot.subject, body)    
+        if (appEnv.nodeEnv === 'production') {
+            utils.sendEmail(senderEmail, senderPassword, to, ballot.subject, body)    
+        }
     }
     return 'ok'
 }
