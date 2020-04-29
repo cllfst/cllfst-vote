@@ -51,12 +51,12 @@ function runCheck(ballot, votingToken) {
     const startDate = moment(ballot.startDate).utc()
     const endDate = moment(ballot.endDate).utc()
     const now = moment().utc()
-   /* if (now.isBefore(startDate)) {
+    if (now.isBefore(startDate)) {
         return utils.failedCheck(401,'Ballot is not open yet!')
     }
     if (now.isAfter(endDate)) {
         return utils.failedCheck(401, 'Ballot is closed!')
-    }*/
+    }
 
     // check authorization token
     const isValid = ballot.tokens.includes(votingToken)
