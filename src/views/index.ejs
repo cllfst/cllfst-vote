@@ -45,8 +45,11 @@
               <h4 class="w3-large">
                 <a href="/results/<%= item.ballotName %>"> <%= item.ballotName %> </a>
               </h4>
-              <p>Start: <%= item.startDate %> </p>
-              <p>End: <%= item.endDate %> </p>
+              <%  const startDate = new Date(item.startDate)
+                  const endDate =  new Date(item.endDate)
+              >
+              <p>Start: <%= startDate %> </p>
+              <p>End: <%= endDate %> </p>
             </div>
           </li>
         <% } %>
