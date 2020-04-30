@@ -29,11 +29,11 @@ function runCheck(ballot) {
     const now = moment().utc()
     if (now.isBefore(startDate)) {
         return utils.failedCheck(401,'Ballot is not open yet! Please revisit'
-            + ' us after the end of the vote on ' , date: ballot.endDate)
+            + ' us after the end of the vote on', ballot.endDate)
     }
     if (now.isBefore(endDate)) {
         return utils.failedCheck(401,'Ballot is still active! Please revisit'
-            + ' us after the end of the vote on ' , date: ballot.endDate)
+            + ' us after the end of the vote on', ballot.endDate)
     }
     return {isError: false}
 }
