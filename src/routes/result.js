@@ -10,7 +10,7 @@ router.get('/:ballotName',async function(req, res, next) {
     const ballotName = req.params.ballotName
     const ballot = await db.findBallotByName(ballotName)
     const check = runCheck(ballot)
-     if (check.isError) {
+    if (check.isError) {
         return res.render('error', check)
     } 
 
