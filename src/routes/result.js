@@ -12,7 +12,7 @@ router.get('/:ballotName',async function(req, res, next) {
     const check = runCheck(ballot)
     if (check.isError) {
         return res.render('error', check)
-    } 
+    }
 
     const candidatesPerRolePerVote = getCandidatesPerRolePerVote(ballot)   
     return res.render('result', {roles: utils.roles, candidatesPerRolePerVote: candidatesPerRolePerVote})
