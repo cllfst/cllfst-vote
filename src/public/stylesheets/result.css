@@ -7,13 +7,11 @@
   
 }
   .bgimg {
-  background-image: url(../images/CLL.png);
-
-  background-position: center;
-  background-size: cover;
-  padding: 0 !important;
-  margin: 0 auto !important;
-}
+    background-image: url(../images/CLL.png);
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+  }
   table th {
     width: 200%;  
    
@@ -47,3 +45,9 @@ img {
       color: darkblue;
       
     }
+
+.td {
+  color: #1223a2; 
+  background-color: #e6dff5; 
+  font-family: Geneva;
+}
