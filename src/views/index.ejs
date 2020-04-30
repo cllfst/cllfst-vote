@@ -26,10 +26,10 @@
       <hr class="w3-border-grey" style="margin:auto;width:40%">
       <p class="w3-large w3-center">You need an access link to be able to vote.</p>
     </div>
-
+    <br>
     <!-- open ballots -->
     <div class="w3-display-bottommiddle w3-padding-large">
-      <h1>Currently open ballots</h1>
+      <h1 class="w3-center">Currently open ballots</h1>
       
       <ul class="w3-ul w3-card-4">
         <% if (openBallots.length === 0) { %> 
@@ -40,13 +40,16 @@
           </li>
         <% } %> 
         <% for (const item of openBallots) { %>
-          <li class="w3-bar w3-white w3-margin">
+          <li onclick="location.href='/results/<%= item.ballotName %>';" class="w3-bar w3-white w3-margin">
             <div class="w3-bar-item">
               <h4 class="w3-large">
-                <a href="/results/<%= item.ballotName %>"> <%= item.ballotName %> </a>
+               <%= item.ballotName %>
               </h4>
-              <p>Start: <%= item.startDate %> </p>
-              <p>End: <%= item.endDate %> </p>
+              <%  const startDate = new Date(item.startDate)
+                  const endDate =  new Date(item.endDate)
+              %>
+              <p>Start: <%= startDate %> </p>
+              <p>End: <%= endDate %> </p>
             </div>
           </li>
         <% } %>

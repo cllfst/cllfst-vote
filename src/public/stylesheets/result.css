@@ -2,7 +2,16 @@
     text-align: center;
   
   }
+  body,html {
+    height: 100%;
   
+}
+  .bgimg {
+    background-image: url(../images/CLL.png);
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+  }
   table th {
     width: 200%;
    
@@ -24,7 +33,6 @@ img {
   h1 {
       text-align: center;
       color: blue;
-      text-emphasis: 
   }
 
   .container {
@@ -35,3 +43,9 @@ img {
       color: darkblue;
       
     }
+
+.td {
+  color: #1223a2; 
+  background-color: #e6dff5; 
+  font-family: Geneva;
+}

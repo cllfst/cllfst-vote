@@ -10,3 +10,10 @@ body, html {height: 100%}
 .logo {
   width: 12%;
 }
+h4 {
+ color: #8A2BE2;
+}
+
+p {
+  color: #9370DB;
+}
