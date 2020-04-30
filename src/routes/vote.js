@@ -15,6 +15,7 @@ router.get('/:ballotName', async function (req, res, next) {
     if (check.isError) {
         return res.render('error', check)
     }
+    
     const candidatesPerRole = getCandidatesPerRole(ballot)
     return res.render('vote', { token: votingToken, roles: utils.roles,
         candidatesPerRole: candidatesPerRole })
