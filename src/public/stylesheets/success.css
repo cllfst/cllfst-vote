@@ -1,10 +1,18 @@
+body,h1 {font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+.bgimg {
+  background-image: url(../images/CLL.png);
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+
+
 *{
-    box-sizing:border-box;
+    box-sizing:border-box; */
    /* outline:1px solid ;*/
   }
-  body{
-  background: #ffffff;
-  background: linear-gradient(to bottom, #ffffff 0%,#e1e8ed 100%);
+   body{
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e1e8ed',GradientType=0 );
       height: 100%;
           margin: 0;
@@ -23,18 +31,11 @@
     padding :30px;
     text-align:center;
   }
-  h1{
-      font-family: 'Kaushan Script', cursive;
-    font-size:4em;
-    letter-spacing:3px;
-    color:#2f55d0 ;
-    margin:0;
-    margin-bottom:20px;
-  }
+  
   .wrapper-2 p{
     margin:0;
     font-size:1.3em;
-    color:#aaa;
+    color:#fff;
     font-family: 'Source Sans Pro', sans-serif;
     letter-spacing:1px;
   }
@@ -90,3 +91,17 @@
   }
     
   }
+
+  .penguin {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 7%;
+    width: 15%;
+  }
+
+  .logo {
+    width: 12%;
+  }
+
+  
