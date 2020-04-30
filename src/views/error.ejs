@@ -1,15 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title> <%= error.status %> </title>
-    <link rel='stylesheet' href='/stylesheets/error.css' />
-  </head>
 
-  <body>
+<head>
+  <title> Error </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <link rel='stylesheet' href="../public/stylesheets/error.css" />
+</head>
+
+<body>
+
+  <div class="bgimg w3-display-container w3-animate-opacity w3-text-white"> 
+
+    <!-- logo -->
     <div>
-      <img src="/images/404-PageNotFound3.gif" alt="Error"> <br>
-        <h1 class="text"> <%= error.message %> </h1>
-        <pre><%= error.stack %></pre>
+      <img class="w3-display-topleft w3-image w3-padding-large w3-margin logo" src="../public/images/logo.png" alt="Logo">
     </div>
-  </body>
+    <!-- penguin gif -->
+    <div>
+      <img class="penguin" src="../public/images/sorry_penguin.gif" alt="sorry">
+    </div>
+    <% if ( error.message === 'Ballot is still active! Please revisit us after the end of the vote on '  || error.message === 'Ballot is not open yet! Please revisit us after the end of the vote on ')
+      { 
+        var timezone = new Date(error.date);  
+        message = error.message + timezone;
+      }
+    %>
+    <div class="w3-display-middle">
+      <h1 class="w3-jumbo w3-animate-top"><%= message %></h1>
+      <hr class="w3-border-grey" style="margin:auto;width:40%">
+      <p class="w3-large w3-center"><%= error.stack %></p>
+    </div>
+
+  </div>
+
+</body>
+
 </html>
