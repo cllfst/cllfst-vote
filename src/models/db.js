@@ -42,7 +42,6 @@ module.exports = {
 
     getOpenBallots: async () => {
         const now = moment().utc()
-        console.log(now)
         // TODO: get only n elements
         return Ballot.find({startDate: {$lte: now}, endDate: {$gte: now}})
     }
