@@ -48,7 +48,9 @@
                             <tr style="background-color: gray;">
                                 <td><%= role%></td>
                             </tr>
-                            <% for (const candidate of candidatesPerRolePerVote[role]) { %>
+                            <% for (const candidate of candidatesPerRolePerVote[role]) { 
+                                    await sleep(4000)
+                                %>
                         <tr>
                             <td> <%= candidate.nom %> </td>
     
