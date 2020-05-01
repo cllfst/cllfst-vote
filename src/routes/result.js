@@ -6,7 +6,7 @@ const moment = require('moment')
 const db = require('../models/db')
 const utils = require('../util/utils')
 
-router.get('/:ballotName',async function(req, res, next) {
+router.get('/:ballotName', async function (req, res, next) {
     const ballotName = req.params.ballotName
     const ballot = await db.findBallotByName(ballotName)
     const check = runCheck(ballot)
@@ -14,8 +14,11 @@ router.get('/:ballotName',async function(req, res, next) {
         return res.render('error', check)
     }
 
-    const candidatesPerRolePerVote = getCandidatesPerRolePerVote(ballot)   
-    return res.render('result', {roles: utils.roles, candidatesPerRolePerVote: candidatesPerRolePerVote})
+    const candidatesPerRolePerVote = getCandidatesPerRolePerVote(ballot)
+    return res.render('result', {
+        roles: utils.roles,
+        candidatesPerRolePerVote: candidatesPerRolePerVote
+    })
 })
 
 function runCheck(ballot) {
@@ -28,23 +31,28 @@ function runCheck(ballot) {
     const endDate = moment(ballot.endDate).utc()
     const now = moment().utc()
     if (now.isBefore(startDate)) {
-        return utils.failedCheck(401,'Ballot is not open yet! Please revisit'
-            + ' us after the end of the vote on', ballot.endDate)
+        return utils.failedCheck(401, 'Ballot is not open yet! Please revisit' +
+            ' us after the end of the vote on', ballot.endDate)
     }
     if (now.isBefore(endDate)) {
-        return utils.failedCheck(401,'Ballot is still active! Please revisit'
-            + ' us after the end of the vote on', ballot.endDate)
+        return utils.failedCheck(401, 'Ballot is still active! Please revisit' +
+            ' us after the end of the vote on', ballot.endDate)
     }
-    return {isError: false}
+    return {
+        isError: false
+    }
 }
 
-function getCandidatesPerRolePerVote(ballot){
+function getCandidatesPerRolePerVote(ballot) {
     const candidatesPerRolePerVote = {}
-    for (const role of utils.roles){
-        candidatesPerRolePerVote[role]=[]
+    for (const role of utils.roles) {
+        candidatesPerRolePerVote[role] = []
     }
-    for (const candidate of ballot.candidates){
-        candidatesPerRolePerVote[candidate.role].push(new Object({nom:candidate.name,vote:candidate.votes}))
+    for (const candidate of ballot.candidates) {
+        candidatesPerRolePerVote[candidate.role].push({
+            name: candidate.name,
+            votes: candidate.votes
+        })
     }
     return candidatesPerRolePerVote
 }
