@@ -13,7 +13,7 @@ router.get('/:ballotName', async function (req, res, next) {
     const ballot = await db.findBallotByName(ballotName)
     const check = runCheck(ballot, votingToken)
     if (check.isError) {
-        return res.render('error/error-view', check)
+        return res.render('misc/error', check)
     }
 
     const candidatesPerRole = getCandidatesPerRole(ballot)
@@ -33,10 +33,10 @@ router.post('/:ballotName', async function (req, res, next) {
     const ballot = await db.findBallotByName(ballotName)
     const check = runCheck(ballot, votingToken)
     if (check.isError) {
-        return res.render('error/error-view', check)
+        return res.render('misc/error', check)
     }
     if (!isValidVote(ballot, vote)) {
-        return res.render('error/error-view', utils.failedCheck(400, 'Invalid vote'))
+        return res.render('misc/error', utils.failedCheck(400, 'Invalid vote'))
     }
 
     registerVote(ballot, vote)

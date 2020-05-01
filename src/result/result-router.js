@@ -11,7 +11,7 @@ router.get('/:ballotName', async function (req, res, next) {
     const ballot = await db.findBallotByName(ballotName)
     const check = runCheck(ballot)
     if (check.isError) {
-        return res.render('error/error-view', check)
+        return res.render('misc/error', check)
     }
 
     const candidatesPerRolePerVote = getCandidatesPerRolePerVote(ballot)

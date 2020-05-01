@@ -47,7 +47,7 @@ app.use(function (err, req, res, next) {
     
     // render the error page
     res.locals.error = error
-    res.status(error.status).render('error/error-view')
+    res.status(error.status).render('misc/error')
 })
 
 module.exports = app
