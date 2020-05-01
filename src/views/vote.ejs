@@ -33,7 +33,7 @@
   <div class="container-contact100">
     <div class="wrap-contact100">
       <form class="contact100-form validate-form" method="POST" id="myForm">
-        <span class="contact100-form-title"> Vote Here! </span>
+        <span class="contact100-form-title"> This year's candidates: </span>
 
         <% for (const role of roles) { %>
         <div class="wrap-input100 input100-select">
@@ -53,29 +53,30 @@
         <div class="container-contact100-form-btn">
           <div class="wrap-contact100-form-btn">
             <div class="contact100-form-bgbtn"></div>
-            <button class="contact100-form-btn">
+            <button type="button" id="form-first-submit" class="contact100-form-btn">
               <span> Submit <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
             </button>
           </div>
         </div>
-      </form>
-      <!-- modal -->
-      <div class="modal fade  popup" tabindex="-1" role="dialog" id="myModal">
-        <div class="modal-dialog modal-dialog-centered  popup" role="document">
-          <div class="modal-content ">
-            <div class="modal-header ">
-              <h4 class="modal-title" style="text-align: center;">You are about to submit your answers, are you sure?</h4>
-            </div>
-            <div class="modal-body ">
-              <h5>Once you confirm, you can't go back and change them &hellip;</h5>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">stay on page</button>
-              <button type="button" class="btn btn-primary">confirm</button>
+
+        <!-- modal -->
+        <div class="modal fade  popup" tabindex="-1" role="dialog" id="myModal">
+          <div class="modal-dialog modal-dialog-centered  popup" role="document">
+            <div class="modal-content ">
+              <div class="modal-header ">
+                <h4 class="modal-title" style="text-align: center;">You are about to submit your answers, are you sure?</h4>
+              </div>
+              <div class="modal-body ">
+                <h5>Once you confirm, you can't go back and change them &hellip;</h5>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">stay on page</button>
+                <button type="submit" class="btn btn-primary">confirm</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 
@@ -101,9 +102,8 @@
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
   <script>
-    $('#myForm').on('submit', function (e) {
+    $('#form-first-submit').on('click', function (e) {
       $('#myModal').modal('show');
-      e.preventDefault();
     });
   </script>
 
