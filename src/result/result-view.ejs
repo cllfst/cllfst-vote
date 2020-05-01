@@ -17,24 +17,27 @@
     <%- include ../misc/logo.ejs %>
     <%- include ../misc/home-icon.ejs %>
 
-    <h1 class="w3-display-topleft"><b style="color: white;">Final results!</b></h1>
-
-    <img class="happy-tux" src="/assets/images/happy-tux.gif" alt="Happy tux gif">
+    <img src="/assets/images/happy-tux.gif" class="happy-tux" alt="Happy tux gif">
 
     <div class="container">
       <ul class="responsive-table">
+
+        <li class="table-row result-title w3-blue">
+          <div class="col-100"><strong> Final Result </strong></div>
+        </li>
+
         <li class="table-header">
-          <div class="col-1">Role</div>
-          <div class="col-2">Candidate</div>
-          <div class="col-3">Votes</div>
+          <div class="col-30">Role</div>
+          <div class="col-30">Candidate</div>
+          <div class="col-30">Votes</div>
         </li>
 
         <% for (const role of roles) { %>
         <% for (const candidate of candidatesPerRolePerVote[role]) { %>
         <li class="table-row">
-          <div class="col-1"> <%= role %> </div>
-          <div class="col-2"> <%= candidate.name %> </div>
-          <div class="col-3"><%= candidate.votes %></div>
+          <div class="col-30"> <%= role %> </div>
+          <div class="col-30"> <%= candidate.name %> </div>
+          <div class="col-30"><%= candidate.votes %></div>
         </li>
         <% } %>
         <% } %>
