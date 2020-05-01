@@ -34,8 +34,10 @@
 
   <script>
     var dateInMessage = document.getElementById("dateInMessage")
-    var dateInMessageText = dateInMessage.textContent
-    dateInMessage.innerText = new Date(dateInMessageText)
+    if (dateInMessage) {
+      var dateInMessageText = dateInMessage.textContent
+      dateInMessage.innerText = new Date(dateInMessageText)
+    }
   </script>
 
 </body>

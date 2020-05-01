@@ -1,5 +1,6 @@
 body,h1 {font-family: "Raleway", sans-serif}
 body, html {height: 100%}
+
 .bgimg {
   background-image: url(../images/CLL.png);
   min-height: 100%;
@@ -10,10 +11,7 @@ body, html {height: 100%}
 .logo {
   width: 12%;
 }
-h4 {
- color: #8A2BE2;
-}
 
-p {
-  color: #9370DB;
+.custom-blue {
+  color: #4A7DBF; /* the logo's color */
 }
