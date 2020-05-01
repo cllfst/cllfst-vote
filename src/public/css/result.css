@@ -1,16 +1,4 @@
-body,
-html {
-  font-family: 'lato', sans-serif;
-  height: 100%;
-
-}
-
-.bgimg {
-  background-image: url('../images/CLL.png');
-  min-height: 100%;
-  background-position: center;
-  background-size: cover;
-}
+@import url("common.css");
 
 img {
   display: block;

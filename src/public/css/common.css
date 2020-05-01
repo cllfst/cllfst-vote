@@ -1,0 +1,39 @@
+body,
+h1 {
+    font-family: "Raleway", sans-serif
+}
+
+body,
+html {
+    height: 100%
+}
+
+.bgimg {
+    background-image: url('/assets/images/cll.png');
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+
+.logo {
+    width: 12%;
+}
+
+.penguin {
+    width: 17%;
+    margin-left: 85%;
+    margin-top: 35%;
+}
+
+.light-blue {
+    color: #4A7DBF;
+    /* the logo's color */
+}
+
+.dark-blue {
+    color: #264d73;
+}
+
+.pointer {
+    cursor: pointer;
+}
