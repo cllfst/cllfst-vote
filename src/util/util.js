@@ -2,16 +2,16 @@
 
 const nodemailer = require('nodemailer')
 const randomstring = require('randomstring')
-const appEnv = require('./app-env')
+const env = require('./env')
 
-const roles = ['Secrétaire', 'Interne', 'Externe', 'Materiel', 'Sponsoring',
-    'Médiatisation', 'Communauté']
+const roles = ['Secrétaire général', 'Responsable Interne', 'Responsable Externe', 'Responsable Matériel',
+    'Responsable Sponsoring', 'Responsable Médiatisation', 'Community Manager']
 
 module.exports = {
     roles: roles,
 
     isAdmin: (authorization) => {
-        return authorization === appEnv.adminPassword
+        return authorization === env.adminPassword
     },
     
     generateRandomString: (length) => {

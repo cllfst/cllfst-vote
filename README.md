@@ -49,56 +49,58 @@ Start containers
 cd cllfst-vote/ && docker-compose up -d --build
 ```
 
-## Init new ballot
+## Init new ballot (TODO: add form)
 Run curl/postman with:
 - `Athorization` header set to admin password
 - This following body
+PS: dates should be in UTC,
+PPS: the {} symbol will be replaced by the voting link
 ```
 url: http://localhost:3000/ballots
 
 {
-	"ballotName": "test",
-	"startDate": "2020-05-25T22:19:37.143Z",
-	"endDate": "2020-06-25T22:19:37.143Z",
-	"subject": "CLLFST Elections",
-	"text": "Holà! Por favor use este enlace para votar: {}. Gracias",
-	"emails": ["a", "b", "c"],
+	"ballotName": "Test",
+	"startDate": "2020-05-01T23:05:00.000Z",
+	"endDate":	 "2020-05-30T23:10:00.000Z",
+	"subject": "Vote",
+	"text": "Please use this link to vote: {}. Thank you!",
+	"emails": ["a", "b", "c],
 	"candidates": [
 	    {
 	        "name": "cand1",
-	        "role": "SG"
+	        "role": "Secrétaire général"
 	    },
 	    {
 	        "name": "cand2",
-	        "role": "EX"
+	        "role": "Responsable Externe"
 	    },
 	    {
 	        "name": "cand3",
-	        "role": "IN"
+	        "role": "Responsable Interne"
 	    },
 	    {
 	        "name": "cand4",
-	        "role": "IN"
+	        "role": "Responsable Interne"
 	    },
 	    {
 	        "name": "cand5",
-	        "role": "SP"
+	        "role": "Responsable Sponsoring"
 	    },
 	    {
 	        "name": "cand6",
-	        "role": "ME"
+	        "role": "Responsable Médiatisation"
 	    },
 	    {
 	        "name": "cand7",
-	        "role": "ME"
+	        "role": "Responsable Médiatisation"
 	    },
 	    {
-	        "name": "cand5",
-	        "role": "CM"
+	        "name": "cand8",
+	        "role": "Community Manager"
 	    },
 	    {
-	        "name": "cand3",
-	        "role": "MA"
+	        "name": "cand9",
+	        "role": "Responsable Matériel"
 	    }
 	]
 }
