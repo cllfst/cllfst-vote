@@ -36,7 +36,7 @@ router.post('/:ballotName', async function (req, res, next) {
         return res.render('misc/error', check)
     }
     if (!isValidVote(ballot, vote)) {
-        return res.render('misc/error', utils.failedCheck(400, 'Invalid vote'))
+        return res.render('misc/error', utils.failedCheck(400, 'Your vote is not valid'))
     }
 
     registerVote(ballot, vote)
@@ -50,7 +50,7 @@ router.post('/:ballotName', async function (req, res, next) {
 
 function runCheck(ballot, votingToken) {
     if (!ballot) {
-        return utils.failedCheck(404, 'Ballot not found!')
+        return utils.failedCheck(404, 'The ballot you are looking for is not found!')
     }
 
     // check dates
@@ -58,20 +58,23 @@ function runCheck(ballot, votingToken) {
     const endDate = moment(ballot.endDate).utc()
     const now = moment().utc()
     if (now.isBefore(startDate)) {
-        return utils.failedCheck(401, 'Ballot is not open yet!')
+        return utils.failedCheck(401, 'Voting for this ballot is not open yet!')
     }
     if (now.isAfter(endDate)) {
-        return utils.failedCheck(401, 'Ballot is closed!')
+        return utils.failedCheck(401, 'Voting for this ballot is closed!')
     }
 
     // check authorization token
     const isValid = ballot.tokens.includes(votingToken)
     const isExpired = ballot.expiredTokens.includes(votingToken)
     if (!isValid && !isExpired) {
-        return utils.failedCheck(401, 'Invalid token!')
+        const message = 'Your voting link is not valid! Please check you email inbox ' +
+            'for a valid link. If you believe you have the right to vote and did not receive ' +
+            'it, please contact us.'
+        return utils.failedCheck(401, message)
     }
     if (isExpired) {
-        return utils.failedCheck(401, "Token expired!")
+        return utils.failedCheck(401, "Looks like your token has expired!")
     }
 
     return {
