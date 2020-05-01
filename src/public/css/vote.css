@@ -5,17 +5,17 @@
 
 @font-face {
     font-family: Poppins-Regular;
-    src: url('../fonts/poppins/Poppins-Regular.ttf');
+    src: url('/assets/fonts/poppins/Poppins-Regular.ttf');
 }
 
 @font-face {
     font-family: Poppins-Medium;
-    src: url('../fonts/poppins/Poppins-Medium.ttf');
+    src: url('/assets/fonts/poppins/Poppins-Medium.ttf');
 }
 
 @font-face {
     font-family: Poppins-Bold;
-    src: url('../fonts/poppins/Poppins-Bold.ttf');
+    src: url('/assets/fonts/poppins/Poppins-Bold.ttf');
 }
 
 @font-face {
@@ -197,7 +197,7 @@ iframe {
     background: -o-linear-gradient(45deg, #00dbde, #1335f0);
     background: -moz-linear-gradient(45deg, #00dbde, #1335f0);
     background: linear-gradient(45deg, #00dbde, #1335f0); */
-    background: url("../images/CLL.png") top left/cover no-repeat;
+    background: url("/assets/images/cll.png") top left/cover no-repeat;
 }
 
 .wrap-contact100 {
