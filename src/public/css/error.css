@@ -1,7 +1,15 @@
-body,h1 {font-family: "Raleway", sans-serif}
-body, html {height: 100%}
+body,
+h1 {
+  font-family: "Raleway", sans-serif
+}
+
+body,
+html {
+  height: 100%
+}
+
 .bgimg {
-  background-image: url(../images/CLL.png);
+  background-image: url('/assets/images/cll.png');
   min-height: 100%;
   background-position: center;
   background-size: cover;
@@ -9,7 +17,7 @@ body, html {height: 100%}
 
 .logo {
   width: 12%;
-} 
+}
 
 .penguin {
   width: 17%;
