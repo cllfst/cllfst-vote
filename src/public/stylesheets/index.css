@@ -12,6 +12,14 @@ body, html {height: 100%}
   width: 12%;
 }
 
-.custom-blue {
+.light-blue {
   color: #4A7DBF; /* the logo's color */
+}
+
+.dark-blue {
+  color: #264d73;
+}
+
+.pointer {
+  cursor: pointer;
 }
