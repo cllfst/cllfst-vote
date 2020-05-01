@@ -3,19 +3,19 @@
 const express = require('express')
 const router = express.Router()
 const moment = require('moment')
-const utils = require('../util/utils')
-const appEnv = require('../util/app-env')
-const db = require('../models/db')
+const utils = require('../util/util')
+const env = require('../util/env')
+const db = require('../db/db')
 
 router.get('/', function(req, res, next) {
-    // TODO: return a form to create ballots
-    return res.send('<h1> WIP... </h1>')
+    // TODO: add form to create ballots
+    return res.render('ballot/ballot-view')
 })
 
 router.post('/', async function(req, res, next) {
     const authorization = req.headers.authorization
     if (!utils.isAdmin(authorization)) {
-        return res.render('error', {status: 401, message: 'Unauthorized'})
+        return res.render('error/error-view', {status: 401, message: 'Unauthorized'})
     }
 
     if (!isValidBallotDesc(req.body)) {
@@ -27,7 +27,7 @@ router.post('/', async function(req, res, next) {
     }
 
     if (!isValidCandidateList(req.body.candidates)) {
-        return res.render('error', {status: 400, message: 'Invalid candidate list'})
+        return res.render('error/error-view', {status: 400, message: 'Invalid candidate list'})
     }
 
     const response = await createBallot(req.body)
@@ -49,14 +49,14 @@ async function createBallot(ballot) {
     const newBallot = await db.newBallot(ballot)
     console.log(`=> Created ballot [name:${newBallot.ballotName}]`)
 
-    const senderEmail = appEnv.senderEmail
-    const senderPassword = appEnv.senderPassword
+    const senderEmail = env.senderEmail
+    const senderPassword = env.senderPassword
     for (const to of ballot.emails) {
         const votingToken = utils.generateRandomString()
         const votingUrl = createVotingLink(ballot.ballotName, votingToken)
         const body = ballot.text.replace('{}', votingUrl)
         db.addTokenToBallot(ballot.ballotName, votingToken)
-        if (appEnv.nodeEnv === 'production') {
+        if (env.nodeEnv === 'production') {
             utils.sendEmail(senderEmail, senderPassword, to, ballot.subject, body)    
         }
     }
@@ -90,7 +90,7 @@ function initVotesForCandidates(candidates) {
 }
 
 function createVotingLink(ballotName, votingToken) {
-    return appEnv.protocol + '://' + appEnv.domainName
+    return env.protocol + '://' + env.domainName
         + '/votes/' + ballotName + '?token=' + votingToken
 }
 

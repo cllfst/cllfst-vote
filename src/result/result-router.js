@@ -3,19 +3,19 @@
 const express = require('express')
 const router = express.Router()
 const moment = require('moment')
-const db = require('../models/db')
-const utils = require('../util/utils')
+const db = require('../db/db')
+const utils = require('../util/util')
 
 router.get('/:ballotName', async function (req, res, next) {
     const ballotName = req.params.ballotName
     const ballot = await db.findBallotByName(ballotName)
     const check = runCheck(ballot)
     if (check.isError) {
-        return res.render('error', check)
+        return res.render('error/error-view', check)
     }
 
     const candidatesPerRolePerVote = getCandidatesPerRolePerVote(ballot)
-    return res.render('result', {
+    return res.render('result/result-view', {
         roles: utils.roles,
         candidatesPerRolePerVote: candidatesPerRolePerVote
     })

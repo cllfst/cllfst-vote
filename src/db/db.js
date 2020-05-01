@@ -2,10 +2,10 @@
 
 const mongoose = require('mongoose')
 const moment = require('moment')
-const Ballot = require('./ballot')
-const appEnv = require('../util/app-env')
+const Ballot = require('../ballot/ballot-model')
+const env = require('../util/env')
 
-const url = `mongodb://${appEnv.dbHost}:${appEnv.dbPort}/${appEnv.dbName}`
+const url = `mongodb://${env.dbHost}:${env.dbPort}/${env.dbName}`
 const db = connect()
 
 module.exports = {
