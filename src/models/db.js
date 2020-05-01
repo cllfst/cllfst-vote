@@ -44,6 +44,13 @@ module.exports = {
         const now = moment().utc()
         // TODO: get only n elements
         return Ballot.find({startDate: {$lte: now}, endDate: {$gte: now}})
+    },
+
+    getRecentlyClosedBallots: async () => { // closed during the last week
+        const now = moment().utc()
+        const lastWeek =  now - 604800000 // 1 week in ms
+        // TODO: get only n elements
+        return Ballot.find({endDate: {$lte: now, $gte: lastWeek}})
     }
 
 }

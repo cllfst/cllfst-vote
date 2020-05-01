@@ -11,32 +11,28 @@
 </head>
 
 <body>
-
   <div class="bgimg w3-display-container w3-animate-opacity w3-text-white"> 
 
     <!-- logo -->
     <div>
       <img class="w3-display-topleft w3-image w3-padding-large w3-margin logo" src="/images/logo.png" alt="Logo">
     </div>
-    <!-- penguin gif -->
-    <div>
-      <img class="penguin" src="/images/sorry_penguin.gif" alt="sorry">
-    </div>
+
     <!-- error message -->
-    <% if ( error.message === 'Ballot is still active! Please revisit us after the end of the vote on '  || error.message === 'Ballot is not open yet! Please revisit us after the end of the vote on ')
-      { 
-        var timezone = new Date(error.date);  
-        message = error.message + timezone;
-      }
-    %>
     <div class="w3-display-middle">
-      <h1 class="w3-jumbo w3-animate-top"><%= message %></h1>
+      <h1 class="w3-jumbo w3-animate-top"><%- error.message %></h1>
       <hr class="w3-border-grey" style="margin:auto;width:40%">
       <p class="w3-large w3-center"><%= error.stack %></p>
     </div>
 
+    <!-- penguin gif -->
+    <div>
+      <img class="penguin" src="/images/sorry_penguin.gif" alt="sorry">
+    </div>
+
   </div>
 
+  <script src="/javascripts/common.js"></script>
 </body>
 
 </html>

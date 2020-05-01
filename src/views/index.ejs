@@ -26,37 +26,55 @@
       <p class="w3-large w3-center">You need an access link to be able to vote.</p>
     </div>
     <br>
+
     <!-- open ballots -->
-    <div class="w3-display-bottommiddle w3-padding-large">
-      <h1 class="w3-center">Currently open ballots</h1>
-      
+    <div class="w3-display-bottomright w3-margin">
+      <h3 class="w3-center">Currently open ballots</h3>
       <ul class="w3-ul w3-card-4">
         <% if (openBallots.length === 0) { %> 
-          <li class="w3-bar w3-white w3-margin">
+          <li class="w3-bar w3-white">
             <div class="w3-bar-item">
-              <h4 class="w3-large"> Nothing for now </h4>
+              <h4 class="w3-large dark-blue"> Nothing for now ! </h4>
             </div>
           </li>
         <% } %> 
         <% for (const item of openBallots) { %>
-          <li onclick="location.href='/results/<%= item.ballotName %>';" class="w3-bar w3-white w3-margin">
+          <li onclick="location.href='/results/<%= item.ballotName %>';" class="w3-bar w3-white w3-margin-top pointer">
             <div class="w3-bar-item">
-              <h4 class="w3-large">
-               <%= item.ballotName %>
-              </h4>
-              <%  const startDate = new Date(item.startDate)
-                  const endDate =  new Date(item.endDate)
-              %>
-              <p>Start: <%= startDate %> </p>
-              <p>End: <%= endDate %> </p>
+              <h4 class="w3-large dark-blue"> <%= item.ballotName.charAt(0).toUpperCase() + item.ballotName.slice(1) %> </h4>
+              <p class="light-blue">Started on: <span class="date"> <%= item.startDate %> </span> </p>
+              <p class="light-blue">Ends on: <span class="date"> <%= item.endDate %> </span> </p>
             </div>
           </li>
         <% } %>
       </ul>
     </div>
 
+    <!-- recent ballots -->
+    <div class="w3-display-bottomleft">
+      <h3 class="w3-center w3-margin-left">Recently closed ballots</h3>
+      <ul class="w3-ul w3-card-4">
+        <% if (recentlyClosedBallots.length === 0) { %> 
+          <li class="w3-bar w3-white w3-margin">
+            <div class="w3-bar-item">
+              <h4 class="w3-large dark-blue"> Nothing for now ! </h4>
+            </div>
+          </li>
+        <% } %> 
+        <% for (const item of recentlyClosedBallots) { %>
+          <li onclick="location.href='/results/<%= item.ballotName %>';" class="w3-bar w3-white w3-margin pointer">
+            <div class="w3-bar-item pointer">
+              <h4 class="w3-large dark-blue"> <%= item.ballotName.charAt(0).toUpperCase() + item.ballotName.slice(1) %> </h4>
+              <p class="light-blue">Started on: <span class="date"> <%= item.startDate %> </span> </p>
+              <p class="light-blue">Ended on: <span class="date"> <%= item.endDate %> </span> </p>
+            </div>
+          </li>
+        <% } %>
+      </ul>
+    </div>
   </div>
 
+  <script src="/javascripts/common.js"></script>
 </body>
 
 </html>

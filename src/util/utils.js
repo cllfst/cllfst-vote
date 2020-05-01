@@ -49,12 +49,12 @@ module.exports = {
         return roles.includes(role)
     },
 
-    failedCheck: (status, message) => {
+    failedCheck: (status, message, date) => {
         return {
             isError: true,
             error: {
                 status: status,
-                message: message
+                message: !date ? message : message + ' <span class="date">' + date + '</span>'
             }
         }
     },

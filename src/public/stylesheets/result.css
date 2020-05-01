@@ -1,36 +1,66 @@
-.container {
-    text-align: center;
-  
-  }
-  body,html {
-    height: 100%;
-  
+body,
+html {
+  font-family: 'lato', sans-serif;
+  height: 100%;
+
 }
-  .bgimg {
-    background-image: url(../images/CLL.png);
-    min-height: 100%;
-    background-position: center;
-    background-size: cover;
-  }
-  table th {
-    width: 200%;
-   
-  }
-  
-  table td {
-    text-align: left;
-    margin-right: 40%;
-  }
+
+.bgimg {
+  background-image: url('../images/CLL.png');
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+
 img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    top: 0px;
-    width: 10%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  top: 0px;
+  width: 10%;
 
-  }
+}
 
-  h1 {
+.container {
+  max-width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+li {
+  border-radius: 3px;
+  padding: 1.3em 2em;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+
+.table-header {
+  background-color: rgb(151, 162, 163);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.table-row {
+  background-color: #ffffff;
+  box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+}
+
+.col-1 {
+  flex-basis: 35%;
+}
+
+.col-2 {
+  flex-basis: 35%;
+}
+
+.col-3 {
+  flex-basis: 30%;
+}
+
+/* h1 {
       text-align: center;
       color: blue;
   }
@@ -48,4 +78,4 @@ img {
   color: #1223a2; 
   background-color: #e6dff5; 
   font-family: Geneva;
-}
+} */

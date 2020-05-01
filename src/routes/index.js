@@ -6,7 +6,10 @@ const db = require('../models/db')
 
 router.get('/', async function(req, res, next) {
 
-    res.render('index', {openBallots: await db.getOpenBallots()})
+    res.render('index', {
+        openBallots: await db.getOpenBallots(),
+        recentlyClosedBallots: await db.getRecentlyClosedBallots()
+    })
 })
 
 module.exports = router
