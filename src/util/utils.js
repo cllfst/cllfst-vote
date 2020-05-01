@@ -54,7 +54,7 @@ module.exports = {
             isError: true,
             error: {
                 status: status,
-                message: !date ? message : message + ' <span id="dateInMessage">' + date + '</span>'
+                message: !date ? message : message + ' <span class="date">' + date + '</span>'
             }
         }
     },

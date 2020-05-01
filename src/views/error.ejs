@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
   <div class="bgimg w3-display-container w3-animate-opacity w3-text-white"> 
 
     <!-- logo -->
@@ -19,6 +18,7 @@
       <img class="w3-display-topleft w3-image w3-padding-large w3-margin logo" src="/images/logo.png" alt="Logo">
     </div>
 
+    <!-- error message -->
     <div class="w3-display-middle">
       <h1 class="w3-jumbo w3-animate-top"><%- error.message %></h1>
       <hr class="w3-border-grey" style="margin:auto;width:40%">
@@ -32,13 +32,7 @@
 
   </div>
 
-  <script>
-    var dateInMessage = document.getElementById("dateInMessage")
-    if (dateInMessage) {
-      dateInMessage.innerText = new Date(dateInMessage.textContent).toLocaleString()
-    }
-  </script>
-
+  <script src="/javascripts/common.js"></script>
 </body>
 
 </html>
