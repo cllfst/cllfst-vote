@@ -41,17 +41,7 @@
           </li>
         <% } %> 
         <% for (const item of openBallots) { %>
-          <li onclick="location.href='/results/<%= item.ballotName %>';" class="w3-bar w3-white w3-margin-top pointer">
-            <div class="w3-bar-item">
-              <h4 class="w3-large dark-blue"> <%= item.ballotName.charAt(0).toUpperCase() + item.ballotName.slice(1) %> </h4>
-              <p class="light-blue">Started on: <span class="date"> <%= item.startDate %> </span> </p>
-              <p class="light-blue">Ends on: <span class="date"> <%= item.endDate %> </span> </p>
-              <p class="light-blue">
-                <span> Total voters: <%= item.tokens.length %> </span> &nbsp;
-                <span> Voted: <%= item.expiredTokens.length %> </span>
-              </p>
-            </div>
-          </li>
+          <%- include ../misc/ballot-cart.ejs %>
         <% } %>
       </ul>
     </div>
@@ -68,17 +58,7 @@
           </li>
         <% } %> 
         <% for (const item of recentlyClosedBallots) { %>
-          <li onclick="location.href='/results/<%= item.ballotName %>';" class="w3-bar w3-white w3-margin pointer">
-            <div class="w3-bar-item pointer">
-              <h4 class="w3-large dark-blue"> <%= item.ballotName.charAt(0).toUpperCase() + item.ballotName.slice(1) %> </h4>
-              <p class="light-blue">Started on: <span class="date"> <%= item.startDate %> </span> </p>
-              <p class="light-blue">Ended on: <span class="date"> <%= item.endDate %> </span> </p>
-              <p class="light-blue">
-                <span> Total voters: <%= item.tokens.length %> </span> &nbsp;
-                <span> Voted: <%= item.expiredTokens.length %> </span>
-              </p>
-            </div>
-          </li>
+          <%- include ../misc/ballot-cart.ejs %>
         <% } %>
       </ul>
     </div>
