@@ -39,7 +39,7 @@ async function createBallot(ballot) {
 
     ////////////////////
     // TODO: remove this /!\
-    await db.removeBallotByName(ballot.ballotName)
+    // await db.removeBallotByName(ballot.ballotName)
     // if (await db.findBallotByName(ballotName)) {
     //     res.status(400).json({"error": "Duplicate ballot name"})
     // }
