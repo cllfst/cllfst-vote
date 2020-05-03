@@ -1,4 +1,4 @@
-<li onclick="location.href='/results/<%= item.ballotName %>';" class="w3-bar w3-white w3-margin pointer">
+<li onclick="location.href='/results/<%= item.ballotName %>';" class="w3-bar w3-white w3-<%= class %> pointer">
     <div class="w3-bar-item">
         <h4 class="w3-large dark-blue"> <%= item.ballotName.charAt(0).toUpperCase() + item.ballotName.slice(1) %> </h4>
         <p class="light-blue">Start date: <span class="date"> <%= item.startDate %> </span> </p>
