@@ -7,6 +7,18 @@ const env = require('./env')
 const roles = ['Secrétaire général', 'Responsable Interne', 'Responsable Externe', 'Responsable Matériel',
     'Responsable Sponsoring', 'Responsable Médiatisation', 'Community Manager']
 
+const senderEmail = env.senderEmail
+const senderPassword = env.senderPassword
+const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    pool: true, // thanks @abir-abdelli
+    auth: {
+        user: senderEmail,
+        pass: senderPassword
+    }
+})
+
 module.exports = {
     roles: roles,
 
@@ -21,15 +33,7 @@ module.exports = {
         return randomstring.generate(length);
     },
     
-    sendEmail: (senderEmail, senderPassword, to, subject, body) => {
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: senderEmail,
-                pass: senderPassword
-            }
-        })
-        
+    sendEmail: (to, subject, body) => {
         const mailOptions = {
             from: senderEmail,
             to: to,

@@ -49,15 +49,13 @@ async function createBallot(ballot) {
     const newBallot = await db.newBallot(ballot)
     console.log(`=> Created ballot [name:${newBallot.ballotName}]`)
 
-    const senderEmail = env.senderEmail
-    const senderPassword = env.senderPassword
     for (const to of ballot.emails) {
         const votingToken = utils.generateRandomString()
         const votingUrl = createVotingLink(ballot.ballotName, votingToken)
         const body = ballot.text.replace('{}', votingUrl)
         db.addTokenToBallot(ballot.ballotName, votingToken)
         if (env.nodeEnv === 'production') {
-            utils.sendEmail(senderEmail, senderPassword, to, ballot.subject, body)    
+            utils.sendEmail(to, ballot.subject, body)
         }
     }
     return 'ok'
