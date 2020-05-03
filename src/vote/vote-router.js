@@ -61,7 +61,8 @@ function runCheck(ballot, votingToken) {
         return utils.failedCheck(401, 'Voting for this ballot is not open yet!')
     }
     if (now.isAfter(endDate)) {
-        return utils.failedCheck(401, 'Voting for this ballot is closed!')
+        const message = `Voting for this ballot is closed! <a href="/results/${ballot.ballotName}">Click to see the result</a>`
+        return utils.failedCheck(401, message)
     }
 
     // check authorization token
