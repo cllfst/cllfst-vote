@@ -41,7 +41,7 @@
           </li>
         <% } %> 
         <% for (const item of openBallots) { %>
-          <%- include ../misc/ballot-cart.ejs %>
+          <%- include('../misc/ballot-cart', {item: item, className: 'margin-top'}); %>
         <% } %>
       </ul>
     </div>
@@ -58,7 +58,7 @@
           </li>
         <% } %> 
         <% for (const item of recentlyClosedBallots) { %>
-          <%- include ../misc/ballot-cart.ejs %>
+          <%- include('../misc/ballot-cart', {item: item, className: 'margin'}); %>
         <% } %>
       </ul>
     </div>

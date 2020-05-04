@@ -4,8 +4,8 @@ const nodemailer = require('nodemailer')
 const randomstring = require('randomstring')
 const env = require('./env')
 
-const roles = ['Secrétaire général', 'Responsable Interne', 'Responsable Externe', 'Responsable Matériel',
-    'Responsable Sponsoring', 'Responsable Médiatisation', 'Community Manager']
+const roles = ['General secretary', 'Internal relations manager', 'External relations manager', 'Materials manager',
+    'Sponsorship manager', 'Media manager', 'Community Manager']
 
 const senderEmail = env.senderEmail
 const senderPassword = env.senderPassword
